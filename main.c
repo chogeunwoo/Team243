@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int sum(num1,num2);
+ sum(num1,num2);
 void mul(num1,num2);
 
 void main(){
