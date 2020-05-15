@@ -3,7 +3,7 @@
 void sum(num1,num2);
 void mul(num1,num2);
 void div(num1, num2);
-
+void min(num1,num2);
 void main(){
   int calc=0;
   int num1=0;
