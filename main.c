@@ -2,6 +2,7 @@
 
 void sum(num1,num2);
 void mul(num1,num2);
+void div(num1, num2);
 
 void main(){
   int calc=0;
@@ -25,6 +26,7 @@ void main(){
         mul(num1,num2);
         break;
       case 4:
+        div(num1, num2);
         break;
       default:
         printf("위의 번호로 골라주세요\n");
@@ -40,4 +42,8 @@ void mul(int num1, int num2)
 }
 void min(int num1,int num2){
   printf("%d - %d = %d\n", num1 ,num2 ,num1-num2);
+}
+void div(int num1, int num2)
+{
+  printf("%d / %d = %d , 나머지: %d\n", num1, num2, num1/num2, num1%num2);
 }
