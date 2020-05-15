@@ -19,6 +19,7 @@ void main(){
         sum(num1,num2);
         break;
       case 2:
+        min(num1, num2);
         break;
       case 3:
         mul(num1,num2);
@@ -36,4 +37,7 @@ void sum(int num1,int num2){
 void mul(int num1, int num2)
 {
   printf(%d * %d = %d\n, num1, num1 ,num1*num2);
+}
+void min(int num1,int num2){
+  printf("%d - %d = %d\n", num1 ,num2 ,num1-num2);
 }
