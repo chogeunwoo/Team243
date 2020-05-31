@@ -1,0 +1,183 @@
+{% extends "sub_layout.html" %}
+{% block content %}
+
+  <main id="main">
+
+    <!-- ======= About Us Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>About Us</h2>
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>About Us</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End About Us Section -->
+
+    <!-- ======= About Section ======= -->
+    <section class="about" data-aos="fade-up">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-6">
+            <img src="{{url_for('static', filename='img/Non-smoking.png')}}" class="img-fluid" alt="" width="430px">
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0">
+            <h3>"나는 이제 간다. 당부하는데 무슨 일이 있어도 절대 흡연하지말라."</h3>
+            <p class="font-italic">
+              러시아 태생의 비국 배우 율 브리너가 사망하기 전 남긴 말입니다. 그는 65세의 나이에 사망하였고 사망 원인은 폐암입니다.
+            </p>
+            <ul>
+              <li><i class="icofont-check-circled"></i> 폐암 </li>
+              <li><i class="icofont-check-circled"></i> 후두암 </li>
+              <li><i class="icofont-check-circled"></i> 방광암 </li>
+            </ul>
+            <p>
+              이 질병들의 원인 중 가장 큰 이유는 모두 흡연입니다. 특히 폐암 환자중 약 85%가 흡연에 의한 것으로 의학계에 보고되고 있습니다.
+              흡연자의 사망률은 비흡연자의 사망률보다 약 1.6%이상 높고, 흡연으로 인한 질병은 사람이 견디기 힘든 수준의 고통을 유발합니다.<br><br>
+              <p style="font-weight: bold" >이래도 피우시겠습니까?</p>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Facts Section ======= -->
+    <section class="facts section-bg" data-aos="fade-up">
+      <div class="container">
+
+        <div class="row counters">
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">600,000</span>
+            <p>전 세계 연 평균 흡연 사망자</p>
+          </div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">61,723</span>
+            <p>국내 연 평균 흡연 사망자</p>
+          </div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">261,820</span>
+            <p>금연 등록 인원</p>
+          </div>
+
+          <div class="col-lg-3 col-6 text-center">
+            <span data-toggle="counter-up">11,180</span>
+            <p>금연 성공 인원</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Facts Section -->
+
+    <!-- ======= Our Skills Section ======= -->
+    <section class="skills" data-aos="fade-up">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Share of work</h2>
+          <p>저희 팀은 모두가 함께 개발하였습니다.</p>
+        </div>
+
+        <div class="skills-content">
+
+          <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+              <span class="skill">조근우 <i class="val">25%</i></span>
+            </div>
+          </div>
+
+          <div class="progress">
+            <div class="progress-bar bg-info" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+              <span class="skill">박주연 <i class="val">25%</i></span>
+            </div>
+          </div>
+
+          <div class="progress">
+            <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+              <span class="skill">이상욱 <i class="val">25%</i></span>
+            </div>
+          </div>
+
+          <div class="progress">
+            <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+              <span class="skill">김민규 <i class="val">25%</i></span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Our Skills Section -->
+
+    <!-- ======= Tetstimonials Section ======= -->
+    <section class="testimonials" data-aos="fade-up">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Team Introduction</h2>
+        </div>
+
+        <div class="owl-carousel testimonials-carousel">
+
+          <div class="testimonial-item">
+            <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+            <h3>조근우</h3>
+            <h4>블라블라</h4>
+            <p>
+              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+              나는 프로젝트에서 이런이런걸 했고 이런이런걸 배웠다.
+              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+            </p>
+          </div>
+
+          <div class="testimonial-item">
+            <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+            <h3>박주연</h3>
+            <h4>블라블라</h4>
+            <p>
+              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+              나는 프로젝트에서 이런이런걸 했고 이런이런걸 배웠다.
+              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+            </p>
+          </div>
+
+          <div class="testimonial-item">
+            <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
+            <h3>이상욱</h3>
+            <h4>블라블라</h4>
+            <p>
+              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+              나는 프로젝트에서 이런이런걸 했고 이런이런걸 배웠다.
+              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+            </p>
+          </div>
+
+          <div class="testimonial-item">
+            <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+            <h3>김민규</h3>
+            <h4>블라블라</h4>
+            <p>
+              <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+              나는 프로젝트에서 이런이런걸 했고 이런이런걸 배웠다.
+              <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Ttstimonials Section -->
+
+  </main><!-- End #main -->
+
+  
+  {% endblock %}
