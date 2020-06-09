@@ -1,3 +1,28 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  function registerGO() {
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var member = this.responseText;
+        console.log(member,"script");
+        if (member == "true") {
+          location.href = '/';
+        }
+        else {
+          alert("check your input value");
+        }
+      }
+    };
+    
+    var parameter = 'id=' + document.getElementById("exampleInputEmail").value + '&pw=' + document.getElementById("exampleInputPassword").value;
+    console.log(parameter);//입력 값 콘솔에 출력
+    xhttp.open("post", "/login_route", true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(parameter);//입력 값 서버에 전송
+  }
+</script>
 {% extends "sub_layout.html" %}
 {% block content %}
 
@@ -38,7 +63,7 @@
                   </div>
                 </div>
                 <br>
-                <a class="btn btn-primary btn-user btn-block">Login</a>
+                <a class="btn btn-primary btn-user btn-block" onclick="registerGO()">Login</a>
               </form>
               <hr>
               <div class="text-center">

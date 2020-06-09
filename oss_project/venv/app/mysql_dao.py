@@ -23,3 +23,20 @@ def get_dbInsert_register(name, email, pw, phone_num):
         finally:
             cursor.close()
             return "true"
+
+def get_dbSelect_register(email,pw):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "SELECT email FROM test.os_member where email=" + "'" + email + "'" + "AND pw=" + "'" + pw +"'"
+        cursor.execute(sql)
+        row_num = cursor.rowcount
+    finally:
+        cursor.close()
+        if row_num > 0:
+            return "true"
+        else:
+            return "false"
+        
+        
+

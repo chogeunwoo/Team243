@@ -6,12 +6,12 @@
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
         var member = this.responseText;
-
+        console.log(member,"script");
         if (member == "fail") {
           alert("You are already a member.");
         }
         else {
-          location.href = '/'
+          location.href = '/';
         }
       }
     };

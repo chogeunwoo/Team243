@@ -26,7 +26,15 @@ def health_center():
 @app.route('/login')
 def login():
   return render_template('login.html')
-   
+
+@app.route('/login_route', methods=['GET', 'POST'])
+def login_route():
+  if request.method == "POST":
+    reqid = request.form["id"]
+    reqpw = request.form["pw"]
+    content = mysql_dao.get_dbSelect_register(reqid, reqpw)
+  return content
+
 @app.route('/createAccount')
 def createAccount_page():
   return render_template('createAccount.html')
