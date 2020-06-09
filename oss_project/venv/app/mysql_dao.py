@@ -34,9 +34,11 @@ def get_dbSelect_register(email,pw):
     finally:
         cursor.close()
         if row_num > 0:
-            return "true"
+            row = cursor.fetchall()
+            for row_data in row :
+                json_object = {
+                    "email": row_data[0]
+                }
+            return json_object
         else:
-            return "false"
-        
-        
-
+            return "fail"

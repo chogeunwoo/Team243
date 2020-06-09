@@ -1,11 +1,20 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, escape
 import mysql_dao
  
 app = Flask(__name__)
 
+
 @app.route('/')
 def main():
-  return render_template('main.html')
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    return render_template('main.html', loginId = result)
+
+  else:
+    session['username'] = ''
+    result = '%s' % escape(session['username'])
+
+    return redirect('/')
 
 @app.route('/contact')
 def contact():
@@ -33,7 +42,15 @@ def login_route():
     reqid = request.form["id"]
     reqpw = request.form["pw"]
     content = mysql_dao.get_dbSelect_register(reqid, reqpw)
-  return content
+    
+    if(content != 'fail'):
+      result = content["email"]
+      session['username'] = result
+      return result
+
+    else:
+      result = "fail"
+      return result
 
 @app.route('/createAccount')
 def createAccount_page():
@@ -54,5 +71,6 @@ def register_route():
 if __name__ == '__main__':
   app.debug = True
   app.use_reloader=True
+  app.secret_key = "123123123"
   app.run(host='0.0.0.0', port=80) 
   #port : 5000
