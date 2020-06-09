@@ -1,5 +1,5 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, request
+import mysql_dao
  
 app = Flask(__name__)
 
@@ -30,6 +30,18 @@ def login():
 @app.route('/createAccount')
 def createAccount_page():
   return render_template('createAccount.html')
+
+@app.route('/register_route', methods=['GET', 'POST'])
+def register_route(): 
+  if request.method == "POST":
+    reqname = request.form["name"]
+    reqid = request.form["id"]
+    reqpw = request.form["pw"]
+    reqphone_num = request.form["phone_num"]
+    
+    content = mysql_dao.get_dbInsert_register(reqname,reqid,reqpw,reqphone_num)
+
+  return content
 
 if __name__ == '__main__':
   app.debug = True

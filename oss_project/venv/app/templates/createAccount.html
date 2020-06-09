@@ -1,3 +1,29 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  function registerGO() {
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var member = this.responseText;
+
+        if (member == "fail") {
+          alert("You are already a member.");
+        }
+        else {
+          location.href = '/'
+        }
+      }
+    };
+    
+    var parameter = 'name=' + document.getElementById("defaultRegisterFormName").value + '&id=' + document.getElementById("defaultRegisterFormId").value + '&pw=' + document.getElementById("defaultRegisterFormPassword").value + '&phone_num=' + document.getElementById("defaultRegisterPhonePassword").value;
+    console.log(parameter);//입력 값 콘솔에 출력
+    xhttp.open("post", "/register_route", true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(parameter);//입력 값 서버에 전송
+  }
+</script>
+
 {% extends "sub_layout.html" %}
 {% block content %}
 
@@ -7,7 +33,7 @@
         <div class="container">
 
             <div class="d-flex justify-content-between align-items-center">
-                <h2>Login</h2>
+                <h2>Create Account</h2>
                 <ol>
                     <li><a href="/">Home</a></li>
                     <li>Create Account</li>
@@ -53,7 +79,7 @@
                     </div>
 
                     <!-- Sign up button -->
-                    <button class="btn btn-info my-4 btn-block" type="submit">Sign in</button>
+                    <button class="btn btn-info my-4 btn-block" type="submit" onclick="registerGO()">Sign in</button>
 
                     <!-- Social register -->
                     <p>or sign up with:</p>
