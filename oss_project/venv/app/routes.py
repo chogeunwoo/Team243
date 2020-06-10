@@ -52,6 +52,11 @@ def login_route():
       result = "fail"
       return result
 
+@app.route('/logout_route')
+def logout_rout():
+  session.pop('username',None)
+  return redirect('/')
+
 @app.route('/createAccount')
 def createAccount_page():
   return render_template('createAccount.html')
