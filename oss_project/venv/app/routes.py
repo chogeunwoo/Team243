@@ -13,28 +13,41 @@ def main():
   else:
     session['username'] = ''
     result = '%s' % escape(session['username'])
-
     return redirect('/')
 
 @app.route('/contact')
 def contact():
-  return render_template('contact.html')
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    return render_template('contact.html', loginId = result)
+  
 
 @app.route('/about')
 def about():
-  return render_template('about.html')
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    return render_template('about.html', loginId = result)
 
 @app.route('/services')
 def services():
-  return render_template('services.html')
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    return render_template('services.html', loginId = result)
+
  
 @app.route('/health_center')
 def health_center():
-  return render_template('health_center.html')
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    return render_template('health_center.html', loginId = result)
+
  
 @app.route('/login')
 def login():
-  return render_template('login.html')
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    return render_template('login.html', loginId = result)
+
 
 @app.route('/login_route', methods=['GET', 'POST'])
 def login_route():
@@ -59,7 +72,9 @@ def logout_rout():
 
 @app.route('/createAccount')
 def createAccount_page():
-  return render_template('createAccount.html')
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    return render_template('createAccount.html', loginId = result)
 
 @app.route('/register_route', methods=['GET', 'POST'])
 def register_route(): 
