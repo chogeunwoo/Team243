@@ -68,10 +68,28 @@ def register_route():
     reqid = request.form["id"]
     reqpw = request.form["pw"]
     reqphone_num = request.form["phone_num"]
-    
     content = mysql_dao.get_dbInsert_register(reqname,reqid,reqpw,reqphone_num)
 
   return content
+
+@app.route('/diary')
+def diary():
+  return render_template('diary.html')
+
+@app.route('/new_diary')
+def new_diary():  
+    return render_template('new_diary.html')
+
+
+@app.route('/diary_route', methods=['GET', 'POST'])
+def diary_route():
+  if request.method == "POST":
+    title = request.form["title"]
+    body = request.form["body"]
+    date = request.form["date"]
+
+    content = mysql_dao.get_dbInsert_diary(title, body, date)
+    return content
 
 if __name__ == '__main__':
   app.debug = True

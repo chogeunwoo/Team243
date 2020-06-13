@@ -1,0 +1,57 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  function DiaryGo() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var member = this.responseText;
+        console.log(member,"script");
+        if (member == "fail") {
+          alert("실패");
+        }
+        else {
+          location.href = '/';
+        }
+      }
+    };
+
+    var parameter = 'title=' + document.getElementById("title").value + '&body=' + document.getElementById("diary_body").value + '&date=' + document.getElementById("date").value;
+    console.log(parameter);//입력 값 콘솔에 출력
+    xhttp.open("post", "/diary_route", true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(parameter);//입력 값 서버에 전송
+  }
+</script>
+{% extends "sub_layout.html" %}
+{% block content %}
+
+<main id="main">
+
+  <!-- ======= Health center Section ======= -->
+  <section class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Diary</h2>
+        <ol>
+          <li><a href="main">Home</a></li>
+          <li>Diary</li>
+        </ol>
+      </div>
+
+    </div>
+  </section><!-- End Health center Section -->
+  <form>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" id="title" placeholder="title">
+    </div>
+    <div class="form-group">
+      <label for="diary_body">diary_body</label>
+      <textarea cols="50" rows="30" class="form-control" id="diary_body" placeholder="diary_body"></textarea>
+    </div>
+    <input type="date" min="1998-12-18" max="2023-12-31" id="date"><br><br>
+    <button type="submit" class="btn btn-primary" onclick="DiaryGo()">Create Diary</button>
+  </form>
+</main>
+{% endblock %}
