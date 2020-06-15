@@ -34,6 +34,36 @@ def services():
     result = '%s' % escape(session['username'])
     return render_template('services.html', loginId = result)
 
+@app.route('/freeBoard')
+def freeBoard():
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    post = mysql_dao.get_dbSelect_post()
+    print(post)
+    print(post[1])
+    return render_template('freeBoard.html', content=post)
+
+@app.route('/createPost')
+def createPost():
+  if session['username'] == '':
+    return redirect('/')
+  
+  else:
+    result = '%s' % escape(session['username'])
+    return render_template('createPost.html',loginId = result)
+
+@app.route('/createPost_route', methods=['GET','POST'])
+def createPost_route():
+  if request.method == "POST":
+    ptitle = request.form["ptitle"]
+    pbody = request.form["pbody"]
+    email = session["username"]
+
+    content = mysql_dao.get_dbInsert_post(ptitle,pbody,email)
+
+  return content
+  
+  
  
 @app.route('/health_center')
 def health_center():
