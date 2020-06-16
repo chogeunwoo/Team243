@@ -1,0 +1,33 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  function DiaryUpdateGo() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var member = this.responseText;
+        console.log(member,"script");
+        if (member == "fail") {
+          alert("실패");
+        }
+        else {
+          location.href = '/diary';
+        }
+      }
+    };
+
+    var parameter = 'title=' + document.getElementById("title").value + '&body=' + document.getElementById("diary_body").value + '&date=' + document.getElementById("date").value;
+    console.log(parameter);//입력 값 콘솔에 출력
+    xhttp.open("post", "/diary_update_route", true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(parameter);//입력 값 서버에 전송
+  }
+</script>
+{% extends "sub_layout.html" %}
+{% block content %}
+<main id="main">
+    <input type="text" class="form-control" id="title" placeholder="title" value = "{{trade['diary_title']}}">
+    <textarea cols="50" rows="30" class="form-control" id="diary_body" placeholder="diary_body">{{trade['diary_body']}}</textarea>
+    <input type="date" min="1998-12-18" max="2023-12-31" id="date"  value = "{{trade['diary_date']}}"><br><br>
+    <button type="submit" class="btn btn-primary" onclick="DiaryUpdateGo()">Submit Diary</button>
+</main>
+{% endblock %}

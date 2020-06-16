@@ -66,6 +66,36 @@ def get_dbInsert_diary(diary_title, diary_body, diary_date):
         cursor.close()
         return "true"
 
+
+def get_dbSelect_diary():
+    try:
+        conn = connection.connection()
+        with conn.cursor() as cursor:
+            sql = "SELECT diary_id, diary_title, diary_body, diary_date FROM test1.diary"
+            cursor.execute(sql)
+            rows = cursor.fetchall()
+    except Exception as e:
+        print('->', e)
+        rows = None
+    finally:
+        if conn:
+            conn.close()
+    return rows
+
+
+def get_dbUpdate_diary(diary_id, diary_title, diary_body, diary_date):
+     conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "UPDATE test1.diary SET diary_title = " + diary_title + "diary_body = " + diary_body + "diary_date = " + diary_date + "WHERE diary_id = " + diary_id
+        val = (diary_title, diary_body, diary_date)
+        cursor.execute(sql,val)
+        conn.commit()
+    finally:
+        cursor.close()
+        return "true"
+    return "true"
+    
 def get_dbSelect_post():
     conn = connection.connection()
     try:

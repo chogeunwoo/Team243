@@ -1,7 +1,23 @@
 {% extends "sub_layout.html" %}
 {% block content %}
+<style>
+    #select{
+        display : inline-block;
+        width : 100px;
+        overflow : hidden;
+        text-overflow : ellipsis;
+        white-space : nowrap;
+    }
+    </style>
+
 <main id="main">
 <a href = "new_diary"><button>다이어리 작성</button></a>
-
+{% for trade in trades: %}
+<h1>{{ trade['diary_title'] }}</h1>
+<p id = "select">{{ trade['diary_body'] }}</p>
+<p>{{ trade['diary_date'] }}</p>
+<a href = "diary_update"> <button class="btn btn-primary">수정</button></a>
+<hr>
+{% endfor %}
 </main>
 {% endblock %}
