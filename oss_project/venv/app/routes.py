@@ -123,6 +123,13 @@ def diary():
 def new_diary():  
     return render_template('new_diary.html')
 
+@app.route('/myinfo')
+def myinfo():
+  return render_template('myinfo.html')
+
+@app.route('/changeMyinfo')
+def changeMyinfo():
+  return render_template('changeMyinfo.html')
 
 @app.route('/diary_route', methods=['GET', 'POST'])
 def diary_route():

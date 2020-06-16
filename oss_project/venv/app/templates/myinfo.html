@@ -1,0 +1,73 @@
+{% extends "sub_layout.html" %}
+
+{% block content %}
+
+<main id="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+              <div style="border:0px; float:left;height:auto;width:100px;margin: 10px 20px 10px 0px; padding:10px;">
+                <font size="10em" color="#1e4356">
+                  <b>Profile</b>
+                </font>
+              </div>
+            </div>
+        </div>
+
+        <div class="row">
+          <div class ="col-6">
+            <div style="border-spacing:0px;margin:80px 0px 0px 0px;">
+              <img src="{{url_for('static', filename='img/Non-smoking.PNG')}}" class="img-fluid" alt="" width="250px">
+            </div>
+          </div>
+    
+          <div class="col-6">
+            <div style="border: 20px; float:left;height:500px;width:600px;margin:50px 100px 50px 0px; padding:100px;">
+            
+            <form>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputName"><b>Name</b><br>김민규<br/></label>
+                    </div>
+      
+                    <div class="form-group col-md-6">
+                        <label for="inputPhoneNumber"><b>Phone Number</b><br>010-9368-6301<br/></label>
+                      </div>
+      
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputEmail"><b>Email</b><br>lion9638@naver.com<br/></label>
+                  </div>
+    
+                  <div class="form-group col-md-6">
+                    <label for="inputPassword"><b>Password</b><br>asda<br/></label>
+                  </div>
+    
+                </div>
+    
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputSmokeAmount"><b>Smoke Amount</b><br>2갑<br/></label>
+                      </div>
+      
+                    <div class="form-group col-md-6">
+                      <label for="inputReason"><b>Purpose</b><br>To be Healthy<br/></label>
+                    </div>
+      
+                  </div>
+              
+                <button class="btn btn-primary btn-lg active">
+                    <a href = "/changeMyinfo">
+                        change
+                    </a>
+                </button>
+              </form>
+          </div>
+        </div>
+    </div>
+    </div>
+</main>
+
+{% endblock %}
