@@ -44,27 +44,27 @@ def get_dbSelect_register(email,pw):
         else:
             return "fail"
 
-<<<<<<< HEAD
 def get_dbInsert_post(title,body,email):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
         sql = "INSERT INTO post (ptitle, pbody, email) VALUES (%s, %s, %s);"
         val = (title, body, email)
-=======
+    finally:
+        cursor.close()
+        return "true"
+
 def get_dbInsert_diary(diary_title, diary_body, diary_date):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
         sql = "INSERT INTO diary (diary_title, diary_body, diary_date) VALUES (%s, %s, %s);"
         val = (diary_title, diary_body, diary_date)
->>>>>>> origin/sanguk
         cursor.execute(sql,val)
         conn.commit()
     finally:
         cursor.close()
         return "true"
-<<<<<<< HEAD
 
 def get_dbSelect_post():
     conn = connection.connection()
@@ -92,5 +92,3 @@ def get_dbSelect_post():
             return post #json.dumps(row)
         else:
             return "fail"
-=======
->>>>>>> origin/sanguk
