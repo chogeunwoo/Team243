@@ -28,7 +28,11 @@
                     </div>
                     <div class="col-md-auto">
                     </div>
-                       <button type="button" class="btn btn-primary btn-sm" onclick="location.href='/createPost'">글 등록</button>
+                    {% if(loginId==''): %}
+
+                    {% else: %}
+                      <button type="button" class="btn btn-primary btn-sm" onclick="location.href='/createPost'">글 등록</button>
+                    {% endif %}
                 </div>
                 
                 <hr/>
@@ -36,6 +40,7 @@
                 <div class="text-center">
                     <p><h3>제목: {{ contents.ptitle }}</h2></p>
                     <p>내용: {{ contents.pbody }}</p>
+                    <br>
                 </div>
                 {% endfor %}
                 

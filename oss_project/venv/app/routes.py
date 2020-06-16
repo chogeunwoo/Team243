@@ -39,9 +39,7 @@ def freeBoard():
   if 'username' in session:
     result = '%s' % escape(session['username'])
     post = mysql_dao.get_dbSelect_post()
-    print(post)
-    print(post[1])
-    return render_template('freeBoard.html', content=post)
+    return render_template('freeBoard.html', content=post, loginId=result)
 
 @app.route('/createPost')
 def createPost():

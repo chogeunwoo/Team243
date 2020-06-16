@@ -66,19 +66,18 @@ def get_dbSelect_post():
         cursor.close()
         if row_num > 0:
             row = cursor.fetchall()
-            post_list[]
-            for row_data in row :
-                json_object = {
-                    "pno": row_data[0]
-                    "ptitle": row_data[1]
-                    "pbody": row_data[2]
-                    "email": row_data[3]
-                }
-                post_list[row_data]
-                print (post_list[row_data])
-            
+            post=[]
+            for row_data in row:
+                post.append(
+                    {
+                        'pno': row_data[0],
+                        'ptitle': row_data[1],
+                        'pbody': row_data[2],
+                        'email': row_data[3]
+                    }
+                )
             #json.dumps(row)
             # print(json.dumps(row))
-            return post_lsit#json.dumps(row)
+            return post #json.dumps(row)
         else:
             return "fail"
