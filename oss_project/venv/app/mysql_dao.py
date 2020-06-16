@@ -5,7 +5,7 @@ import json
 def get_dbInsert_register(name, email, pw, phone_num):
     conn = connection.connection()
     try:
-        sql = "SELECT email FROM test.os_member where email =" + "'" + email + "'"
+        sql = "SELECT email FROM test1.os_member where email =" + "'" + email + "'"
         cursor = conn.cursor()
         cursor.execute(sql)
         row_num = cursor.rowcount
@@ -28,9 +28,10 @@ def get_dbSelect_register(email,pw):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "SELECT email FROM test.os_member where email=" + "'" + email + "'" + "AND pw=" + "'" + pw +"'"
+        sql = "SELECT email FROM test1.os_member where email=" + "'" + email + "'" + "AND pw=" + "'" + pw +"'"
         cursor.execute(sql)
         row_num = cursor.rowcount
+        print(row_num)
     finally:
         cursor.close()
         if row_num > 0:
@@ -43,17 +44,27 @@ def get_dbSelect_register(email,pw):
         else:
             return "fail"
 
+<<<<<<< HEAD
 def get_dbInsert_post(title,body,email):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
         sql = "INSERT INTO post (ptitle, pbody, email) VALUES (%s, %s, %s);"
         val = (title, body, email)
+=======
+def get_dbInsert_diary(diary_title, diary_body, diary_date):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "INSERT INTO diary (diary_title, diary_body, diary_date) VALUES (%s, %s, %s);"
+        val = (diary_title, diary_body, diary_date)
+>>>>>>> origin/sanguk
         cursor.execute(sql,val)
         conn.commit()
     finally:
         cursor.close()
         return "true"
+<<<<<<< HEAD
 
 def get_dbSelect_post():
     conn = connection.connection()
@@ -81,3 +92,5 @@ def get_dbSelect_post():
             return post #json.dumps(row)
         else:
             return "fail"
+=======
+>>>>>>> origin/sanguk
