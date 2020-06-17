@@ -124,7 +124,8 @@ def changeMyinfo():
 
 @app.route('/diary')
 def diary():
-  return render_template('diary.html', trades = mysql_dao.get_dbSelect_diary())
+  content = mysql_dao.get_dbSelect_diary()
+  return render_template('diary.html',trade = content)
 
 @app.route('/new_diary')
 def new_diary():  
@@ -139,17 +140,26 @@ def diary_route():
     date = request.form["date"]
 
     content = mysql_dao.get_dbInsert_diary(title, body, date)
+    print(content)
     return content
 
-@app.route('diary_update_route', methods=['GET', 'POST'])
+@app.route('/diary_update_route', methods=['GET', 'POST'])
 def diary_update_route():
   if request.method == "POST":
+    diary_id = request.form["diary_id"]
     title = request.form["title"]
     body = request.form["body"]
     date = request.form["date"]
-
-  content = mysql_dao.get_dbUpdate_diary(title, body, date)
+    content = mysql_dao.get_dbUpdate_diary(diary_id, title, body, date)
   return content
+
+@app.route('/diary_update' ,methods=['GET', 'POST'])
+def diary_update():
+  if request.method == "POST":
+    diary_id = request.form["diary_id"]
+    content = mysql_dao.get_dbSelect_diary_body(diary_id)
+    print(content)
+    return render_template('diary_update.html', trade = content)
 
 if __name__ == '__main__':
   app.debug = True

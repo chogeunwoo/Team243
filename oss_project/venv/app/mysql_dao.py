@@ -54,48 +54,6 @@ def get_dbInsert_post(title,body,email):
         cursor.close()
         return "true"
 
-def get_dbInsert_diary(diary_title, diary_body, diary_date):
-    conn = connection.connection()
-    try:
-        cursor = conn.cursor()
-        sql = "INSERT INTO diary (diary_title, diary_body, diary_date) VALUES (%s, %s, %s);"
-        val = (diary_title, diary_body, diary_date)
-        cursor.execute(sql,val)
-        conn.commit()
-    finally:
-        cursor.close()
-        return "true"
-
-
-def get_dbSelect_diary():
-    try:
-        conn = connection.connection()
-        with conn.cursor() as cursor:
-            sql = "SELECT diary_id, diary_title, diary_body, diary_date FROM test1.diary"
-            cursor.execute(sql)
-            rows = cursor.fetchall()
-    except Exception as e:
-        print('->', e)
-        rows = None
-    finally:
-        if conn:
-            conn.close()
-    return rows
-
-
-def get_dbUpdate_diary(diary_id, diary_title, diary_body, diary_date):
-     conn = connection.connection()
-    try:
-        cursor = conn.cursor()
-        sql = "UPDATE test1.diary SET diary_title = " + diary_title + "diary_body = " + diary_body + "diary_date = " + diary_date + "WHERE diary_id = " + diary_id
-        val = (diary_title, diary_body, diary_date)
-        cursor.execute(sql,val)
-        conn.commit()
-    finally:
-        cursor.close()
-        return "true"
-    return "true"
-    
 def get_dbSelect_post():
     conn = connection.connection()
     try:
@@ -122,3 +80,83 @@ def get_dbSelect_post():
             return post #json.dumps(row)
         else:
             return "fail"
+
+def get_dbInsert_diary(diary_title, diary_body, diary_date):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "INSERT INTO diary (diary_title, diary_body, diary_date) VALUES (%s, %s, %s);"
+        val = (diary_title, diary_body, diary_date)
+        cursor.execute(sql,val)
+        conn.commit()
+    finally:
+        cursor.close()
+        return "true"
+
+def get_dbSelect_diary():
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "SELECT * FROM test1.diary"
+        cursor.execute(sql)
+        row_num = cursor.rowcount
+    finally:
+        cursor.close()
+        if row_num > 0:
+            row = cursor.fetchall()
+            post=[]
+            for row_data in row:
+                post.append(
+                    {
+                        'diary_id': row_data[0],
+                        'diary_title': row_data[1],
+                        'diary_body': row_data[2],
+                        'diary_date': row_data[3]
+                    }
+                )
+            #json.dumps(row)
+            # print(json.dumps(row))
+            return post #json.dumps(row)
+        else:
+            return "fail"
+
+def get_dbUpdate_diary_body(diary_id):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "SELECT diary_title, diary_body, diary_date FROM test1.diary WHERE diary_id = " + diary_id
+        cursor.execute(sql)
+        row_num = cursor.rowcount
+    finally:
+        cursor.close()
+        if row_num > 0:
+            row = cursor.fetchall()
+            for row_data in row:
+                post = (
+                    {
+                        'diary_title': row_data[0],
+                        'diary_body': row_data[1],
+                        'diary_date': row_data[2]
+                    }
+                )
+            #json.dumps(row)
+            # print(json.dumps(row))
+            return post #json.dumps(row)
+        else:
+            return "fail"
+
+def get_dbUpdate_diary(diary_id, diary_title, diary_body, diary_date):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "UPDATE test1.diary SET diary_title = " + diary_title + "diary_body = " + diary_body + "diary_date = " + diary_date + "WHERE diary_id = " + diary_id
+        val = (diary_title, diary_body, diary_date)
+        cursor.execute(sql,val)
+        conn.commit()
+    finally:
+        cursor.close()
+        return "true"
+    return "true"
+
+
+

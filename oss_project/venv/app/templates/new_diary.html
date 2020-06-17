@@ -6,11 +6,11 @@
       if (this.readyState == 4 && this.status == 200) {
         var member = this.responseText;
         console.log(member,"script");
-        if (member == "fail") {
-          alert("실패");
+        if (member != "fail") {
+          location.href = '/';
         }
         else {
-          location.href = '/';
+          alert("실패");
         }
       }
     };
@@ -51,7 +51,7 @@
       <textarea cols="50" rows="30" class="form-control" id="diary_body" placeholder="diary_body"></textarea>
     </div>
     <input type="date" min="1998-12-18" max="2023-12-31" id="date"><br><br>
-    <button type="submit" class="btn btn-primary" onclick="DiaryGo()">Create Diary</button>
+    <a href = "/"><button type="submit" class="btn btn-primary" onclick="DiaryGo()">Create Diary</button></a>
   </form>
 </main>
 {% endblock %}

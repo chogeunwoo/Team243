@@ -4,16 +4,14 @@
     var xhttp = new XMLHttpRequest();
     
     xhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
         var member = this.responseText;
         console.log(member,"script");
         if (member == "fail") {
           alert("You are already a member.");
         }
         else {
-          location.href = '/';
+          location.href = "http://localhost/";
         }
-      }
     };
     
     var parameter = 'name=' + document.getElementById("defaultRegisterFormName").value + '&id=' + document.getElementById("defaultRegisterFormId").value + '&pw=' + document.getElementById("defaultRegisterFormPassword").value + '&phone_num=' + document.getElementById("defaultRegisterPhonePassword").value;

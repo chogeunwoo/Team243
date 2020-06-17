@@ -14,8 +14,11 @@
         }
       }
     };
-
-    var parameter = 'title=' + document.getElementById("title").value + '&body=' + document.getElementById("diary_body").value + '&date=' + document.getElementById("date").value;
+    temp = location.href.split("#");
+    data = temp[1].split(":");
+    content = data[1];
+    document.write(content);
+    var parameter = 'diary_id = ' + content
     console.log(parameter);//입력 값 콘솔에 출력
     xhttp.open("post", "/diary_update_route", true);
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -24,10 +27,16 @@
 </script>
 {% extends "sub_layout.html" %}
 {% block content %}
+<style>
+  #id {
+    display : none;
+  }
+  </style>
 <main id="main">
-    <input type="text" class="form-control" id="title" placeholder="title" value = "{{trade['diary_title']}}">
-    <textarea cols="50" rows="30" class="form-control" id="diary_body" placeholder="diary_body">{{trade['diary_body']}}</textarea>
-    <input type="date" min="1998-12-18" max="2023-12-31" id="date"  value = "{{trade['diary_date']}}"><br><br>
-    <button type="submit" class="btn btn-primary" onclick="DiaryUpdateGo()">Submit Diary</button>
+    <p id = "id">{{trade.diary_id}}</p>
+    <input type="text" class="form-control" id="title" placeholder="title" value = "{{trade.diary_title}}">
+    <textarea cols="50" rows="30" class="form-control" id="diary_body" placeholder="diary_body">{{trade.diary_body}}</textarea>
+    <input type="date" min="1998-12-18" max="2023-12-31" id="date"  value = "{{trade.diary_date}}"><br><br>
+    <a href = diary_update><button type="submit" class="btn btn-primary" onclick="DiaryUpdateGo()">Submit Diary</button></a>
 </main>
 {% endblock %}
