@@ -41,6 +41,17 @@ def freeBoard():
     post = mysql_dao.get_dbSelect_post()
     return render_template('freeBoard.html', content=post, loginId=result)
 
+@app.route('/more', methods=['POST'])
+def more():
+  if request.method == "POST":
+    pno = request.form["pno"]
+    post = mysql_dao.get_dbSelect_pno(pno)
+    if 'username' in session:
+      result = '%s' % escape(session['username'])
+  print(result)
+  return render_template('more.html', content=post, loginId = result)
+
+
 @app.route('/createPost')
 def createPost():
   if session['username'] == '':
@@ -56,12 +67,10 @@ def createPost_route():
     ptitle = request.form["ptitle"]
     pbody = request.form["pbody"]
     email = session["username"]
-
     content = mysql_dao.get_dbInsert_post(ptitle,pbody,email)
-
   return content
   
-  
+
  
 @app.route('/health_center')
 def health_center():
@@ -141,7 +150,7 @@ def diary_route():
     content = mysql_dao.get_dbInsert_diary(title, body, date)
     return content
 
-@app.route('diary_update_route', methods=['GET', 'POST'])
+@app.route('/diary_update_route', methods=['GET', 'POST'])
 def diary_update_route():
   if request.method == "POST":
     title = request.form["title"]
