@@ -51,6 +51,28 @@ def more():
   print(result)
   return render_template('more.html', content=post, loginId = result)
 
+@app.route('/changePost', methods=['POST'])
+def changePost():
+  if request.method == "POST":
+    pno = request.form["pno"]
+    post = mysql_dao.get_dbSelect_pno(pno)
+    if 'username' in session:
+      result = '%s' % escape(session['username'])
+  
+  return render_template('changePost.html', content=post, loginId = result)
+
+@app.route('/changePost_route', methods=['POST'])
+def changePost_route():
+  if request.method == "POST":
+    pno = request.form["pno"]
+    ptitle = request.form["ptitle"]
+    pbody = request.form["pbody"]
+    update = mysql_dao.get_dbChange_post(pno,ptitle,pbody)
+  return update
+    
+
+
+  
 
 @app.route('/createPost')
 def createPost():

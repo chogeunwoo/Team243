@@ -144,3 +144,15 @@ def get_dbSelect_pno(pno):
             return json_object
         else:
             return "fail"
+
+def get_dbChange_post(ptitle,pbody,pno):
+    conn = connection.connection()
+
+    try:
+        with conn.cursor() as cursor:
+            sql = "UPDATE test.post SET ptitle = '조근우', pbody = %s WHERE pno = 30;"
+            cursor.execute(sql,pbody)
+        conn.commit()
+    finally:
+        cursor.close()
+        return "true"

@@ -25,14 +25,14 @@
                 </div>
                 {% if (loginId == content.email): %}
                 <span>
-                  <button type="button" class="btn btn-primary btn-sm" onclick="">글 수정</button>
-                  
+                  <form method="POST" action="/changePost">
+                    <input type="text" name="pno" style="display:none;" value="{{ content.pno }}">
+                    <button type="submit" class="btn btn-primary btn-sm">글 수정</button>
+                  </form>
+                </span> 
+                <span>
                   <button type="button" class="btn btn-primary btn-sm" onclick="">글 삭제</button>
                 </span>
-                  
-                
-                
-                
                 {% else: %}
                 <p></p>
                 {% endif %}
