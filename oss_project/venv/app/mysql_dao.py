@@ -147,11 +147,15 @@ def get_dbSelect_pno(pno):
 
 def get_dbChange_post(ptitle,pbody,pno):
     conn = connection.connection()
-
     try:
-        with conn.cursor() as cursor:
-            sql = "UPDATE test.post SET ptitle = '조근우', pbody = %s WHERE pno = 30;"
-            cursor.execute(sql,pbody)
+        cursor = conn.cursor()
+        pname = ptitle
+        sql = "UPDATE test.post SET ptitle =" + pname + ", pbody =" + pbody + "WHERE pno =" + pno
+        val = (ptitle,pbody,pno)
+        print(pname)
+        print(pbody)
+        print(pno)
+        cursor.execute(sql,val)
         conn.commit()
     finally:
         cursor.close()
