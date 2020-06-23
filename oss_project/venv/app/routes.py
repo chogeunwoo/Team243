@@ -1,8 +1,17 @@
 from flask import Flask, render_template, request, session, redirect, escape
 import mysql_dao
+from flask_mail import Mail, Message
+import smtplib
  
 app = Flask(__name__)
 
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = "juyeone125@gmail.com" 
+app.config['MAIL_PASSWORD'] = 'wndus481!!' 
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USE_TLS'] = False
+mail = Mail(app)   
 
 @app.route('/')
 def main():
@@ -20,7 +29,27 @@ def contact():
   if 'username' in session:
     result = '%s' % escape(session['username'])
     return render_template('contact.html', loginId = result)
-  
+
+@app.route("/contact", methods=['post', 'get'])
+def email_test():
+   
+    if request.method == 'POST':
+        senders = request.form['name_sender']
+        senders2 = request.form['email_sender']
+        receiver = request.form['email_receiver']
+        content = '보내는 사람:' + senders + '\n\n' + '답장 받을 이메일:' + senders2 + '\n\n' + '문의 내용:' + request.form['email_content']
+        receiver = receiver.split(',')
+       
+        for i in range(len(receiver)):
+            receiver[i] = receiver[i].strip()
+
+        result = send_email(senders, receiver, content)
+    return "Your mail has been sent successfully"
+   
+def send_email(senders, receiver, content):
+    msg = Message('Stop Smoking 문의 메일', sender = senders, recipients = receiver)
+    msg.body = content
+    mail.send(msg)
 
 @app.route('/about')
 def about():
@@ -70,15 +99,10 @@ def changePost_route():
     update = mysql_dao.get_dbChange_post(pno,ptitle,pbody)
   return update
     
-
-
-  
-
 @app.route('/createPost')
 def createPost():
   if session['username'] == '':
     return redirect('/')
-  
   else:
     result = '%s' % escape(session['username'])
     return render_template('createPost.html',loginId = result)
@@ -92,21 +116,17 @@ def createPost_route():
     content = mysql_dao.get_dbInsert_post(ptitle,pbody,email)
   return content
   
-
- 
 @app.route('/health_center')
 def health_center():
   if 'username' in session:
     result = '%s' % escape(session['username'])
     return render_template('health_center.html', loginId = result)
 
- 
 @app.route('/login')
 def login():
   if 'username' in session:
     result = '%s' % escape(session['username'])
     return render_template('login.html', loginId = result)
-
 
 @app.route('/login_route', methods=['GET', 'POST'])
 def login_route():
@@ -119,7 +139,6 @@ def login_route():
       result = content["email"]
       session['username'] = result
       return result
-
     else:
       result = "fail"
       return result
