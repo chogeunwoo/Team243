@@ -1,27 +1,3 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script>
-  function DiaryUpdateGoid() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        var member = this.responseText;
-        console.log(member,"script");
-        if (member == "fail") {
-          alert("실패");
-        }
-        else {
-          location.href = '/diary.update';
-        }
-      }
-    };
-
-    var parameter = 'diary_id= ' + trades.diary_id
-    console.log(parameter);//입력 값 콘솔에 출력
-    xhttp.open("post", "/diary_update", true);
-    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhttp.send(parameter);//입력 값 서버에 전송
-  }
-</script>
 {% extends "sub_layout.html" %}
 {% block content %}
 <style>
@@ -32,19 +8,19 @@
         text-overflow : ellipsis;
         white-space : nowrap;
     }
-    #id {
-        display : none;
-    }
     </style>
 
 <main id="main">
-<a href = "new_diary"><button>다이어리 작성</button></a>
+<a href = "new_diary"><button type = "submit" class="btn btn-primary">다이어리 작성</button></a>
 {% for trades in trade: %}
-<p id = "id">{{trades.diary_id}}</p>
+<p style = "display: none;">{{trades.diary_id}}</p>
 <h1>{{ trades.diary_title}}</h1>
 <p id = "select">{{ trades.diary_body }}</p>
 <p>{{ trades.diary_date }}</p>
-<a href = "/diary_update"><button onclick="DiaryUpdateGoid('{{trades.diary_id}}')" class="btn btn-primary">수정</button></a>
+<form method="POST" action = "/diary_more">
+  <input type = "text" name = "id" style = "display: none;" value="{{trades.diary_id}}">
+  <button type = "submit" class="btn btn-primary">더 보기</button>
+</form>
 <hr>
 {% endfor %}
 </main>

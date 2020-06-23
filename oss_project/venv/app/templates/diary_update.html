@@ -1,42 +1,18 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script>
-  function DiaryUpdateGo() {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        var member = this.responseText;
-        console.log(member,"script");
-        if (member == "fail") {
-          alert("실패");
-        }
-        else {
-          location.href = '/diary';
-        }
-      }
-    };
-    temp = location.href.split("#");
-    data = temp[1].split(":");
-    content = data[1];
-    document.write(content);
-    var parameter = 'diary_id = ' + content
-    console.log(parameter);//입력 값 콘솔에 출력
-    xhttp.open("post", "/diary_update_route", true);
-    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    xhttp.send(parameter);//입력 값 서버에 전송
-  }
-</script>
 {% extends "sub_layout.html" %}
 {% block content %}
-<style>
-  #id {
-    display : none;
-  }
-  </style>
 <main id="main">
-    <p id = "id">{{trade.diary_id}}</p>
-    <input type="text" class="form-control" id="title" placeholder="title" value = "{{trade.diary_title}}">
-    <textarea cols="50" rows="30" class="form-control" id="diary_body" placeholder="diary_body">{{trade.diary_body}}</textarea>
-    <input type="date" min="1998-12-18" max="2023-12-31" id="date"  value = "{{trade.diary_date}}"><br><br>
-    <a href = diary_update><button type="submit" class="btn btn-primary" onclick="DiaryUpdateGo()">Submit Diary</button></a>
+    <form method="POST" action = "/diary_update_view">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" class="form-control" name="title" placeholder="title" value = "{{ trade.diary_title}}">
+        </div>
+        <div class="form-group">
+          <label for="body">diary_body</label>
+          <textarea cols="50" rows="30" class="form-control" name="body" placeholder="body">{{ trade.diary_body }}</textarea>
+        </div>
+        <input type="date" min="1998-12-18" max="2023-12-31" name="date" value="{{ trade.diary_date }}"><br><br>
+        <input type = "text" name = "id" style = "display: none;" value="{{trade.diary_id}}">
+        <button type = "submit" class="btn btn-primary">수정</button>
+      </form>
 </main>
 {% endblock %}

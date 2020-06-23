@@ -120,11 +120,11 @@ def get_dbSelect_diary():
         else:
             return "fail"
 
-def get_dbUpdate_diary_body(diary_id):
+def get_dbMore_diary(diary_id):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "SELECT diary_title, diary_body, diary_date FROM test1.diary WHERE diary_id = " + diary_id
+        sql = "SELECT * FROM test1.diary WHERE diary_id = " + diary_id
         cursor.execute(sql)
         row_num = cursor.rowcount
     finally:
@@ -134,9 +134,10 @@ def get_dbUpdate_diary_body(diary_id):
             for row_data in row:
                 post = (
                     {
-                        'diary_title': row_data[0],
-                        'diary_body': row_data[1],
-                        'diary_date': row_data[2]
+                        'diary_id': row_data[0],
+                        'diary_title': row_data[1],
+                        'diary_body': row_data[2],
+                        'diary_date': row_data[3]
                     }
                 )
             #json.dumps(row)
@@ -145,18 +146,28 @@ def get_dbUpdate_diary_body(diary_id):
         else:
             return "fail"
 
+
 def get_dbUpdate_diary(diary_id, diary_title, diary_body, diary_date):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "UPDATE test1.diary SET diary_title = " + diary_title + "diary_body = " + diary_body + "diary_date = " + diary_date + "WHERE diary_id = " + diary_id
-        val = (diary_title, diary_body, diary_date)
+        sql = 'UPDATE test1.diary SET diary_title = ' + diary_title + ' diary_body = ' + diary_body + ' diary_date = ' + diary_date +  ' WHERE diary_id = ' + diary_id
+        val = (diary_id, diary_title, diary_body, diary_date)
         cursor.execute(sql,val)
         conn.commit()
     finally:
         cursor.close()
         return "true"
-    return "true"
 
 
 
+def get_dbDelete_diary(diary_id):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "DELETE FROM test1.diary WHERE diary_id =" + diary_id
+        cursor.execute(sql)
+        conn.commit()
+    finally:
+        cursor.close()
+        return "true"
