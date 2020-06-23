@@ -214,3 +214,22 @@ def get_dbDelete_diary(diary_id):
     finally:
         cursor.close()
         return "true"
+
+def get_centerSelect():
+    conn = connection.connection()
+    try:
+        sql = "SELECT center_city,center_group,center_town,center_address,center_name,center_number FROM test.healthnew"
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        row_num = cursor.rowcount
+    finally:
+        cursor.close()
+    if row_num > 0:
+        object_list = []
+        row = cursor.fetchall()
+        object_list.append(row_num)
+        for row_data in row:
+            json_object = {"city": row_data[0], "group": row_data[1], "town": row_data[2], "address": row_data[3], "name": row_data[4], "number": row_data[5]}
+            object_list.append(json_object)
+        return object_list
+    return "fail"

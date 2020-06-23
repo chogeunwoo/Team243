@@ -118,9 +118,11 @@ def createPost_route():
   
 @app.route('/health_center')
 def health_center():
+  content = mysql_dao.get_centerSelect()
+
   if 'username' in session:
     result = '%s' % escape(session['username'])
-    return render_template('health_center.html', loginId = result)
+    return render_template('health_center.html', loginId = result, content=content)
 
 @app.route('/login')
 def login():
