@@ -96,14 +96,6 @@ def get_dbInsert_diary(diary_title, diary_body, diary_date):
         return "true"
 
 def get_dbSelect_diary():
-<<<<<<< HEAD
-    conn = connection.connection()
-    try:
-        cursor = conn.cursor()
-        sql = "SELECT * FROM test1.diary"
-        cursor.execute(sql)
-        row_num = cursor.rowcount
-=======
     try:
         conn = connection.connection()
         with conn.cursor() as cursor:
@@ -126,7 +118,7 @@ def get_dbUpdate_diary(diary_id, diary_title, diary_body, diary_date):
         val = (diary_title, diary_body, diary_date)
         cursor.execute(sql,val)
         conn.commit()
->>>>>>> 20d61f05322d9fc8b99179e95997be0a92e83742
+
     finally:
         cursor.close()
         if row_num > 0:
@@ -195,15 +187,6 @@ def get_dbSelect_pno(pno):
         else:
             return "fail"
 
-<<<<<<< HEAD
-
-def get_dbUpdate_diary(diary_id, diary_title, diary_body, diary_date):
-    conn = connection.connection()
-    try:
-        cursor = conn.cursor()
-        sql = 'UPDATE test1.diary SET diary_title = ' + diary_title + ' diary_body = ' + diary_body + ' diary_date = ' + diary_date +  ' WHERE diary_id = ' + diary_id
-        val = (diary_id, diary_title, diary_body, diary_date)
-=======
 def get_dbChange_post(ptitle,pbody,pno):
     conn = connection.connection()
     try:
@@ -214,14 +197,11 @@ def get_dbChange_post(ptitle,pbody,pno):
         print(pname)
         print(pbody)
         print(pno)
->>>>>>> 20d61f05322d9fc8b99179e95997be0a92e83742
         cursor.execute(sql,val)
         conn.commit()
     finally:
         cursor.close()
         return "true"
-<<<<<<< HEAD
-
 
 
 def get_dbDelete_diary(diary_id):
@@ -234,5 +214,3 @@ def get_dbDelete_diary(diary_id):
     finally:
         cursor.close()
         return "true"
-=======
->>>>>>> 20d61f05322d9fc8b99179e95997be0a92e83742
