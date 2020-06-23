@@ -41,6 +41,39 @@ def freeBoard():
     post = mysql_dao.get_dbSelect_post()
     return render_template('freeBoard.html', content=post, loginId=result)
 
+@app.route('/more', methods=['POST'])
+def more():
+  if request.method == "POST":
+    pno = request.form["pno"]
+    post = mysql_dao.get_dbSelect_pno(pno)
+    if 'username' in session:
+      result = '%s' % escape(session['username'])
+  print(result)
+  return render_template('more.html', content=post, loginId = result)
+
+@app.route('/changePost', methods=['POST'])
+def changePost():
+  if request.method == "POST":
+    pno = request.form["pno"]
+    post = mysql_dao.get_dbSelect_pno(pno)
+    if 'username' in session:
+      result = '%s' % escape(session['username'])
+  
+  return render_template('changePost.html', content=post, loginId = result)
+
+@app.route('/changePost_route', methods=['POST'])
+def changePost_route():
+  if request.method == "POST":
+    pno = request.form["pno"]
+    ptitle = request.form["ptitle"]
+    pbody = request.form["pbody"]
+    update = mysql_dao.get_dbChange_post(pno,ptitle,pbody)
+  return update
+    
+
+
+  
+
 @app.route('/createPost')
 def createPost():
   if session['username'] == '':
@@ -56,12 +89,10 @@ def createPost_route():
     ptitle = request.form["ptitle"]
     pbody = request.form["pbody"]
     email = session["username"]
-
     content = mysql_dao.get_dbInsert_post(ptitle,pbody,email)
-
   return content
   
-  
+
  
 @app.route('/health_center')
 def health_center():
@@ -142,6 +173,7 @@ def diary_route():
     content = mysql_dao.get_dbInsert_diary(title, body, date)
     return content
 
+<<<<<<< HEAD
 @app.route('/diary_more',methods =['GET','POST'])
 def diary_more():
   if request.method == "POST":
@@ -150,6 +182,9 @@ def diary_more():
     return render_template('diary_more.html', trade = content)
 
 @app.route('/diary_update_route', methods = ['GET','POST'])
+=======
+@app.route('/diary_update_route', methods=['GET', 'POST'])
+>>>>>>> 20d61f05322d9fc8b99179e95997be0a92e83742
 def diary_update_route():
   if request.method == "POST":
     diary_id = request.form["id"]

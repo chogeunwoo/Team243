@@ -40,7 +40,11 @@
                 <div class="text-center">
                     <p><h3>제목: {{ contents.ptitle }}</h2></p>
                     <p>내용: {{ contents.pbody }}</p>
-                    <br>
+                    <form method="POST" action="/more">
+                      <input type="text" name="pno" style="display:none;" value="{{ contents.pno }}">
+                      <button type="submit" class="btn btn-primary btn-sm">MORE</button>
+                    </form>
+                    <hr/>
                 </div>
                 {% endfor %}
                 

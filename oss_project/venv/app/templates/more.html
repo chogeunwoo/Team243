@@ -1,0 +1,51 @@
+{% extends "sub_layout.html" %}
+{% block content %}
+<main id="main">
+    <section class="breadcrumbs">
+        <div class="container">
+  
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>Free Board</h2>
+            <ol>
+              <li><a href="/">Home</a></li>
+              <li><a href="/services">Our Services</a></li>
+            </ol>
+          </div>
+  
+        </div>
+    </section>
+    <section class="services">
+      <div style="width:960px; margin:0 auto" >
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h2>{{ content.ptitle }}</h2>
+                </div>
+                <div class="col-md-auto">
+                </div>
+                {% if (loginId == content.email): %}
+                <span>
+                  <form method="POST" action="/changePost">
+                    <input type="text" name="pno" style="display:none;" value="{{ content.pno }}">
+                    <button type="submit" class="btn btn-primary btn-sm">글 수정</button>
+                  </form>
+                </span> 
+                <span>
+                  <button type="button" class="btn btn-primary btn-sm" onclick="">글 삭제</button>
+                </span>
+                {% else: %}
+                <p></p>
+                {% endif %}
+            </div>
+
+            <div class="text-center">
+                <p><h3>제목: {{ content.ptitle }}</h2></p>
+                <p>내용: {{ content.pbody }}</p>
+                <hr/>
+            </div>
+        </div>
+    </div>
+    </section>
+    
+</main>
+{% endblock %}

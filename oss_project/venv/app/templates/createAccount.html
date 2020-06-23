@@ -4,6 +4,10 @@
     var xhttp = new XMLHttpRequest();
     
     xhttp.onreadystatechange = function () {
+<<<<<<< HEAD
+=======
+     
+>>>>>>> 20d61f05322d9fc8b99179e95997be0a92e83742
         var member = this.responseText;
         console.log(member,"script");
         if (member == "fail") {
@@ -12,6 +16,10 @@
         else {
           location.href = "http://localhost/";
         }
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 20d61f05322d9fc8b99179e95997be0a92e83742
     };
     
     var parameter = 'name=' + document.getElementById("defaultRegisterFormName").value + '&id=' + document.getElementById("defaultRegisterFormId").value + '&pw=' + document.getElementById("defaultRegisterFormPassword").value + '&phone_num=' + document.getElementById("defaultRegisterPhonePassword").value;
