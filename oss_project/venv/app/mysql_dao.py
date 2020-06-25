@@ -228,3 +228,20 @@ def get_centerSelect():
             object_list.append(json_object)
         return object_list
     return "fail"
+
+
+def get_dbSelect_password(email, name):
+    conn = connection.connection()
+    try:
+        sql = "SELECT pw FROM test.os_member where email =" + "'" + email + "'" + "AND name = '" + name + "'"
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        row_num = cursor.rowcount
+    finally:
+        cursor.close()
+    if row_num > 0:
+        row = cursor.fetchall()
+        for row_data in row :
+            result = row_data[0]
+        return result
+    return "fail"

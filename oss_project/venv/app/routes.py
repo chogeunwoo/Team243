@@ -87,6 +87,10 @@ def changePost():
     post = mysql_dao.get_dbSelect_pno(pno)
     if 'username' in session:
       result = '%s' % escape(session['username'])
+    else:
+      session['username'] = ''
+      result = '%s' % escape(session['username'])
+    return redirect('/changePost')
   
   return render_template('changePost.html', content=post, loginId = result)
 
@@ -122,13 +126,17 @@ def health_center():
 
   if 'username' in session:
     result = '%s' % escape(session['username'])
-    return render_template('health_center.html', loginId = result, content=content)
+    return render_template('health_center.html', loginId = result)
+
+  else:
+    session['username'] = ''
+    result = '%s' % escape(session['username'])
+
+  return redirect('/health_center')
 
 @app.route('/login')
 def login():
-  if 'username' in session:
-    result = '%s' % escape(session['username'])
-    return render_template('login.html', loginId = result)
+  return render_template('login.html')
 
 @app.route('/login_route', methods=['GET', 'POST'])
 def login_route():
@@ -155,6 +163,12 @@ def createAccount_page():
   if 'username' in session:
     result = '%s' % escape(session['username'])
     return render_template('createAccount.html', loginId = result)
+
+  else:
+    session['username'] = ''
+    result = '%s' % escape(session['username'])
+
+  return redirect('/createAccount')
 
 @app.route('/register_route', methods=['GET', 'POST'])
 def register_route(): 
@@ -223,6 +237,29 @@ def diary_delete():
     diary_id = request.form["id"]
     content = mysql_dao.get_dbDelete_diary(diary_id)
     return redirect("diary")
+
+
+@app.route('/forgot_password_page')
+def forgot_password_page():
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    return render_template('password.html', loginId = result)
+
+  else:
+    session['username'] = ''
+    result = '%s' % escape(session['username'])
+
+  return redirect('/forgot_password_page')
+
+  
+@app.route("/password_route", methods=['GET', 'POST'])
+def password_route():
+  if request.method == "POST":
+    reqid = request.form["id"]
+    reqname = request.form["name"]
+
+    content = mysql_dao.get_dbSelect_password(reqid,reqname)
+  return content
 
 if __name__ == '__main__':
   app.debug = True

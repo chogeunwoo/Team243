@@ -54,23 +54,23 @@
           <li><a href="/about">About Us</a></li>
           <li><a href="/services">Services</a></li>
           <li><a href="/health_center">Health center</a></li>
+          <li><a href="/contact">Contact Us</a></li>
           {% if(loginId==''): %}
           <li class="drop-down"><a href="">MEMBER</a>
             <ul>
               <li><a href="/login">Login</a></li>
-              <li><a href="#">Forgot Password</a></li>
-              <li><a href="#">Register</a></li>
+              <li><a href="/forgot_password_page">Forgot Password</a></li>
+              <li><a href="/createAccount">Register</a></li>
             </ul>
           </li>
           {% else: %}
           <li class="drop-down"><a href="">{{ loginId }}</a>
             <ul>
-              <li><a href="/logout_route">Logout</a></li>
               <li><a href="/myinfo">My info</a></li>
+              <li><a href="/logout_route">Logout</a></li>
             </ul>
           </li>
           {% endif %}
-          <li><a href="/contact">Contact Us</a></li>
         </ul>
       </nav><!-- .nav-menu -->
 
@@ -97,7 +97,7 @@
     <!-- ======= Team Section ======= -->
 
 
-    <div style="width: 60%; float:none; margin:0 auto">
+    <div style="width: 80%; float:none; margin:0 auto">
 
       <section class="team" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500">
 
@@ -105,23 +105,23 @@
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead>
               <tr>
-                <th>City</th>
-                <th>Group</th>
-                <th>Town</th>
-                <th>Address</th>
-                <th>Center Name</th>
-                <th>Center Call Number</th>
+                <th width="5%">City</th>
+                <th width="5%">Group</th>
+                <th width="5%">Town</th>
+                <th width="55%">Address</th>
+                <th width="15%">Center Name</th>
+                <th width="15%">Center Call Number</th>
               </tr>
             </thead>
             <tbody>
               {% for i in range(1,content[0]+1) %}
               <tr>
-                <td>{{ content[i].city }}</td>
-                <td>{{ content[i].group }}</td>
-                <td>{{ content[i].town }}</td>
-                <td>{{ content[i].address }}</td>
-                <td>{{ content[i].name }}</td>
-                <td>{{ content[i].number }}</td>
+                <td width="5%">{{ content[i].city }}</td>
+                <td width="5%">{{ content[i].group }}</td>
+                <td width="5%">{{ content[i].town }}</td>
+                <td width="55%">{{ content[i].address }}</td>
+                <td width="15%">{{ content[i].name }}</td>
+                <td width="15%">{{ content[i].number }}</td>
               </tr>
               {% endfor %}
             </tbody>
