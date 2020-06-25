@@ -5,7 +5,7 @@ import json
 def get_dbInsert_register(name, email, pw, phone_num):
     conn = connection.connection()
     try:
-        sql = "SELECT email FROM test1.os_member where email =" + "'" + email + "'"
+        sql = "SELECT email FROM test.os_member where email =" + "'" + email + "'"
         cursor = conn.cursor()
         cursor.execute(sql)
         row_num = cursor.rowcount
@@ -28,7 +28,7 @@ def get_dbSelect_register(email,pw):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "SELECT email FROM test1.os_member where email=" + "'" + email + "'" + "AND pw=" + "'" + pw +"'"
+        sql = "SELECT email FROM test.os_member where email=" + "'" + email + "'" + "AND pw=" + "'" + pw +"'"
         cursor.execute(sql)
         row_num = cursor.rowcount
         print(row_num)
@@ -60,7 +60,7 @@ def get_dbSelect_post():
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "SELECT * FROM test1.post"
+        sql = "SELECT * FROM test.post"
         cursor.execute(sql)
         row_num = cursor.rowcount
     finally:
@@ -99,7 +99,7 @@ def get_dbSelect_diary():
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "SELECT diary_id, diary_title, diary_body, diary_date FROM test1.diary"
+        sql = "SELECT diary_id, diary_title, diary_body, diary_date FROM test.diary"
         cursor.execute(sql)
         conn.commit()
         row_num = cursor.rowcount
@@ -127,7 +127,7 @@ def get_dbUpdate_diary(diary_id, diary_title, diary_body, diary_date):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "UPDATE `test1.diary` SET `diary_title` = %s `diary_body` = %s `diary_date` = %s WHERE `diary_id` = %s"
+        sql = "UPDATE `test.diary` SET `diary_title` = %s `diary_body` = %s `diary_date` = %s WHERE `diary_id` = %s"
         cursor.execute(sql, (diary_title, diary_body, diary_date, diary_id))
         conn.commit()
     finally:
@@ -138,7 +138,7 @@ def get_dbMore_diary(diary_id):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "SELECT * FROM test1.diary WHERE diary_id = " + diary_id
+        sql = "SELECT * FROM test.diary WHERE diary_id = " + diary_id
         cursor.execute(sql)
         row_num = cursor.rowcount
     finally:
@@ -163,7 +163,7 @@ def get_dbSelect_pno(pno):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "SELECT * FROM test1.post where pno=" + "'" + pno + "'"
+        sql = "SELECT * FROM test.post where pno=" + "'" + pno + "'"
         cursor.execute(sql)
         row_num = cursor.rowcount
         
@@ -187,7 +187,7 @@ def get_dbChange_post(ptitle,pbody,pno):
     try:
         cursor = conn.cursor()
         pname = ptitle
-        sql = "UPDATE test1.post SET ptitle =" + pname + ", pbody =" + pbody + "WHERE pno =" + pno
+        sql = "UPDATE test.post SET ptitle =" + pname + ", pbody =" + pbody + "WHERE pno =" + pno
         val = (ptitle,pbody,pno)
         print(pname)
         print(pbody)
@@ -203,7 +203,7 @@ def get_dbDelete_diary(diary_id):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "DELETE FROM test1.diary WHERE diary_id =" + diary_id
+        sql = "DELETE FROM test.diary WHERE diary_id =" + diary_id
         cursor.execute(sql)
         conn.commit()
     finally:
@@ -213,7 +213,7 @@ def get_dbDelete_diary(diary_id):
 def get_centerSelect():
     conn = connection.connection()
     try:
-        sql = "SELECT center_city,center_group,center_town,center_address,center_name,center_number FROM test1.healthnew"
+        sql = "SELECT center_city,center_group,center_town,center_address,center_name,center_number FROM test.healthnew"
         cursor = conn.cursor()
         cursor.execute(sql)
         row_num = cursor.rowcount

@@ -11,17 +11,48 @@
     </style>
 
 <main id="main">
-<a href = "new_diary"><button type = "submit" class="btn btn-primary">다이어리 작성</button></a>
-{% for trades in trade: %}
-<p style = "display: none;">{{trades.diary_id}}</p>
-<h1>{{ trades.diary_title}}</h1>
-<p id = "select">{{ trades.diary_body }}</p>
-<p>{{ trades.diary_date }}</p>
-<form method="POST" action = "/diary_more">
-  <input type = "text" name = "id" style = "display: none;" value="{{trades.diary_id}}">
-  <button type = "submit" class="btn btn-primary">더 보기</button>
-</form>
-<hr>
-{% endfor %}
+
+  
+    <!-- ======= Contact Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Diary</h2>
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li>Diary</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+    
+    <section>
+      <div style="width: 60%; float:none; margin:0 auto" >
+        <div style="float: right;">
+          <a href = "new_diary">
+            <button type = "submit" class="btn btn-primary">다이어리 작성</button>
+          </a>
+        </div>
+        <p style="clear: both;"></p>
+
+        {% for trades in trade: %}
+        <p style = "display: none;">{{trades.diary_id}}</p>
+        <h3 style="font-weight: bold;">{{ trades.diary_title}}</h2>
+        <p id = "select">{{ trades.diary_body }}</p>
+        <p>{{ trades.diary_date }}</p>
+        <form method="POST" action = "/diary_more">
+          <input type = "text" name = "id" style = "display: none;" value="{{trades.diary_id}}">
+          <button type = "submit" class="btn btn-primary">더 보기</button>
+        </form>
+        <hr>
+        {% endfor %}
+
+      </div>
+  </section>
+
+
 </main>
 {% endblock %}

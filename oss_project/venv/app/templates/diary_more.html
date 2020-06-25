@@ -1,27 +1,48 @@
 <style>
-    #btn1{
-        float:left;
-        margin-right:10px;
+    #btn1 {
+        float: left;
+        margin-right: 10px;
     }
-    #btn2{
-        float:left;
+
+    #btn2 {
+        float: left;
     }
 </style>
 {% extends "sub_layout.html" %}
 {% block content %}
 <main id="main">
-    <h1>{{ trade.diary_title}}</h1>
-    <p>{{ trade.diary_body }}</p>
-    <p>{{ trade.diary_date }}</p>
-        <form method="POST" action = "/diary_update_route">
-            <input type = "text" name = "id" style = "display: none;" value="{{trade.diary_id}}">
-            <button id =btn1 type = "submit" class = "btn btn-primary">수정</button>
-        </form>  
-        <form method="POST" action = "/diary_delete">
-            <input type = "text" name = "id" style = "display: none;" value="{{trade.diary_id}}">
-            <button id = btn2 type = "submit" class = "btn btn-primary">삭제</button>
-        </form> 
-        <br>
-        <br>
-    </main>
+
+
+    <!-- ======= Login Section ======= -->
+    <section class="breadcrumbs">
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>{{ trade.diary_title}}</h2>
+                <ol>
+                    <li><a href="/diary">Diary</a></li>
+                    <li>{{ trade.diary_date }}</li>
+                </ol>
+            </div>
+
+        </div>
+    </section><!-- End Login Section -->
+    <section>
+        <div style="width: 60%; float:none; margin:0 auto">
+            <p>{{ trade.diary_body }}</p>
+
+            <hr>
+            <form method="POST" action="/diary_update_route">
+                <input type="text" name="id" style="display: none;" value="{{trade.diary_id}}">
+                <button id=btn1 type="submit" class="btn btn-primary">수정</button>
+            </form>
+
+            <form method="POST" action="/diary_delete">
+                <input type="text" name="id" style="display: none;" value="{{trade.diary_id}}">
+                <button id=btn2 type="submit" class="btn btn-primary">삭제</button>
+            </form>
+        </div>
+    </section>
+
+</main>
 {% endblock %}
