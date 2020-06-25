@@ -34,24 +34,28 @@
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
             <div class="icon-box icon-box-cyan">
               <div class="icon"><i class="bx bx-file"></i></div>
-              <h4 class="title"><a href="">금연 Tip 게시판</a></h4>
-              <p class="description">금연에 도움이 되는 </p><p>음식 & 운동 & 생활습관을 공유 해보세요</p>
+              <h4 class="title"><a href="health_center">전국 금연기관</a></h4>
+              <p class="description">전국의 금연기관을 방문하여 오프라인 케어를 받아보세요.</p>
             </div>
           </div>
 
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
             <div class="icon-box icon-box-green">
               <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4 class="title"><a href="">금연 릴레이 <br>게시판</a></h4>
-              <p class="description">금연에 힘들어하는<br> 금연자를 위해 격려의 <p>글 & 영상 & 슬로건을 통해 힘을 보태주세요</p>
+              <h4 class="title"><a href="">개인 케어</a></h4>
+              <p class="description">나의 금연 일자와 신체변화를 확인하세요.</p>
             </div>
           </div>
 
           <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
             <div class="icon-box icon-box-blue">
               <div class="icon"><i class="bx bx-world"></i></div>
+              {% if(loginId==''): %}
+              <h4 class="title"><a href="/login">나의 금연 diary</a></h4>
+              {% else: %}
               <h4 class="title"><a href="/diary">나의 금연 diary</a></h4>
-              <p class="description">자신만의 금연 일기장을 <br>만들어보세요.</p>
+              {% endif %}
+              <p class="description">나만의 금연 일기를 작성하고 매일 확인하세요.</p>
             </div>
           </div>
 

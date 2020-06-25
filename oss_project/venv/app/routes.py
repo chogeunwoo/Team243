@@ -17,8 +17,8 @@ mail = Mail(app)
 def main():
   if 'username' in session:
     result = '%s' % escape(session['username'])
-    return render_template('main.html', loginId = result)
 
+    return render_template('main.html', loginId = result)
   else:
     session['username'] = ''
     result = '%s' % escape(session['username'])
@@ -126,17 +126,25 @@ def health_center():
 
   if 'username' in session:
     result = '%s' % escape(session['username'])
-    return render_template('health_center.html', loginId = result)
+    return render_template('health_center.html', loginId = result, content = content)
 
   else:
     session['username'] = ''
     result = '%s' % escape(session['username'])
 
-  return redirect('/health_center')
+  return redirect('/health_center', content = content)
 
 @app.route('/login')
 def login():
-  return render_template('login.html')
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    return render_template('login.html', loginId = result)
+
+  else:
+    session['username'] = ''
+    result = '%s' % escape(session['username'])
+
+  return redirect('/login')
 
 @app.route('/login_route', methods=['GET', 'POST'])
 def login_route():
@@ -182,7 +190,16 @@ def register_route():
   return content
 @app.route('/myinfo')
 def myinfo():
-  return render_template('myinfo.html')
+  
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    return render_template('myinfo.html', loginId = result)
+
+  else:
+    session['username'] = ''
+    result = '%s' % escape(session['username'])
+
+  return redirect('/myinfo')
 
 @app.route('/changeMyinfo')
 def changeMyinfo():
@@ -191,7 +208,13 @@ def changeMyinfo():
 @app.route('/diary')
 def diary():
   content = mysql_dao.get_dbSelect_diary()
-  return render_template('diary.html',trade = content)
+
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    return render_template('diary.html', loginId = result, trade = content)
+
+  else:
+    return redirect('/')
 
 @app.route('/new_diary')
 def new_diary():  
