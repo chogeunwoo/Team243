@@ -68,6 +68,7 @@ def freeBoard():
   if 'username' in session:
     result = '%s' % escape(session['username'])
     post = mysql_dao.get_dbSelect_post()
+    print(post)
     return render_template('freeBoard.html', content=post, loginId=result)
 
 @app.route('/more', methods=['POST'])
@@ -91,8 +92,15 @@ def changePost():
       session['username'] = ''
       result = '%s' % escape(session['username'])
     return redirect('/changePost')
-  
   return render_template('changePost.html', content=post, loginId = result)
+
+@app.route('/deletePost', methods=['POST'])
+def deletePost():
+  if request.method == "POST":
+    pno = request.form["pno"]
+    delete = mysql_dao.get_dbDelete_post(pno)
+  return redirect('/freeBoard')
+
 
 @app.route('/changePost_route', methods=['POST'])
 def changePost_route():

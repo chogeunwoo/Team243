@@ -81,7 +81,18 @@ def get_dbSelect_post():
             # print(json.dumps(row))
             return post #json.dumps(row)
         else:
-            return "fail"
+            return ""
+
+def get_dbDelete_post(pno):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "DELETE FROM test.post WHERE pno =" + pno
+        cursor.execute(sql)
+        conn.commit()
+    finally:
+        cursor.close()
+        return "true"
 
 def get_dbInsert_diary(diary_title, diary_body, diary_date):
     conn = connection.connection()
