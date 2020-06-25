@@ -177,7 +177,6 @@ def changeMyinfo():
 @app.route('/diary')
 def diary():
   content = mysql_dao.get_dbSelect_diary()
-  print(content)
   return render_template('diary.html',trade = content)
 
 @app.route('/new_diary')
@@ -215,8 +214,7 @@ def diary_update_view():
     title = request.form["title"]
     body = request.form["body"]
     date = request.form["date"]
-    print(diary_id)
-    content = mysql_dao.get_dbUpdate_diary(title, body, date, diary_id)
+    mysql_dao.get_dbUpdate_diary(diary_id, title, body, date)
     return redirect("diary")
 
 @app.route('/diary_delete',methods = ['GET','POST'])
