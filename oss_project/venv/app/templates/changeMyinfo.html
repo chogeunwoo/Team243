@@ -1,3 +1,36 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  function modifyGO() {
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var member = this.responseText;
+
+        if (member == "fail") {
+          alert("Already same information.");
+        }
+        else if(member == "blank"){
+          alert("Please enter all values.");
+        }
+        else {
+          location.href = '/'
+        }
+      }
+    };
+    
+    var parameter = 'name=' + document.getElementById("defaultRegisterFormName").value 
+                  + '&id=' + document.getElementById("defaultRegisterFormId").value 
+                  + '&pw=' + document.getElementById("defaultRegisterFormPassword").value 
+                  + '&phone_num=' + document.getElementById("defaultRegisterFormPhoneNumber").value;
+
+    console.log(parameter);//입력 값 콘솔에 출력
+    xhttp.open("post", "/changeMyinfo_route", true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(parameter);//입력 값 서버에 전송
+  }
+</script>
+
 {% extends "sub_layout.html" %}
 
 {% block content %}
@@ -5,38 +38,54 @@
 <main id="main">
 </main>
 
+<section class="breadcrumbs">
+  <div class="container">
+
+    <div class="d-flex justify-content-between align-items-center">
+      <h2>
+        ChangeMyinfo</h2>
+      <ol>
+        <li><a href="/myinfo">Myinfo</a></li>
+        <li>
+          ChangeMyinfo</li>
+      </ol>
+    </div>
+
+  </div>
+</section>
+
 <div class="container">
-    <div class="row">
-      <div class="col-6">Profile image
-        <img src="{{url_for('static', filename='img/image01')}}" class="img-fluid" alt="" width="150px">
-      </div>
+  <div class="row">
+    <div class="col-lg-6" style = "margin: 50px 50px 0px 0px">
+      <img src="{{url_for('static', filename='img/Non-smoking.PNG')}}" class="img-fluid" alt="" width="250px">
+    </div>
 
       <div class="col-6">
-        <div style="border: 3px salmon; 
+        <div style="border: 3px; 
         float: left; height: auto; width: 700px; 
         margin: 15px 25px 15px 0px; padding: 30px;">
         
         <form>
             <div class="form-group">
                 <label for="inputName">Name</label>
-                <input type="text" class="form-control" id="inputName" placeholder="Gildong Hong">
+                <input type="text" class="form-control" id="defaultModifyFormName" placeholder="">
               </div>
 
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="inputEmail">Email</label>
-                <input type="email" class="form-control" id="inputEmail" placeholder="lion9638@naver.com">
+                <label for="inputEmail">ID</label>
+                <input type="email" class="form-control" id="defaultModifyFormId" placeholder="">
               </div>
 
               <div class="form-group col-md-6">
                 <label for="inputPassword">Password</label>
-                <input type="password" class="form-control" id="inputPassword" placeholder="asda">
+                <input type="password" class="form-control" id="defaultModifyFormPassword" placeholder="">
               </div>
             </div>
 
             <div class="form-group">
               <label for="inputPhoneNumber">Phone number</label>
-              <input type="text" class="form-control" id="inputPhoneNumber" placeholder="010-1234-5678">
+              <input type="text" class="form-control" id="defaultModifyFormPhoneNumber" placeholder="">
             </div>
             
             <div class="form-group">
@@ -47,7 +96,7 @@
                 </label>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" a onclick="modifyGo()" class="btn btn-primary">
                 <a href = "/myinfo">
                   Save
                 </a>

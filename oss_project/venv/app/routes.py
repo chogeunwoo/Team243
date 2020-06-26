@@ -191,6 +191,19 @@ def register_route():
       content = mysql_dao.get_dbInsert_register(reqname,reqid,reqpw,reqphone_num)
       return content
 
+@app.route('/changeMyinfo_route', methods=['GET', 'POST'])
+def changeMyinfo_route(): 
+  if request.method == "POST":
+    reqname = request.form["name"]
+    reqid = request.form["id"]
+    reqpw = request.form["pw"]
+    reqphone_num = request.form["phone_num"]
+    if(reqname == '' or reqid == '' or reqpw == '' or reqphone_num == ''):
+      return "blank"
+    else:
+      content = mysql_dao.get_dbInsert_changeMyinfo(reqname,reqid,reqpw,reqphone_num)
+      return content
+
 @app.route('/myinfo')
 def myinfo():
   

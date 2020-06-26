@@ -49,7 +49,7 @@ def get_dbSelect_myinfo(email):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "SELECT name, pw, phone_num FROM test.os_member where email=" + "'" + email + "'"
+        sql = "SELECT name, email, pw, phone_num FROM test.os_member where email=" + "'" + email + "'"
         cursor.execute(sql)
         row_num = cursor.rowcount
     finally:
@@ -59,8 +59,9 @@ def get_dbSelect_myinfo(email):
             for row_data in row :
                 json_object = {
                     "name": row_data[0],
-                    "pw": row_data[1],
-                    "phone_num": row_data[2]
+                    "id": row_data[1],
+                    "pw": row_data[2],
+                    "phone_num": row_data[3]
                 }
             return json_object
         else:
