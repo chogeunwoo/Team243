@@ -44,6 +44,29 @@ def get_dbSelect_register(email,pw):
         else:
             return "fail"
 
+
+def get_dbSelect_myinfo(email):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "SELECT name, pw, phone_num FROM test.os_member where email=" + "'" + email + "'"
+        cursor.execute(sql)
+        row_num = cursor.rowcount
+    finally:
+        cursor.close()
+        if row_num > 0:
+            row = cursor.fetchall()
+            for row_data in row :
+                json_object = {
+                    "name": row_data[0],
+                    "pw": row_data[1],
+                    "phone_num": row_data[2]
+                }
+            return json_object
+        else:
+            return "fail"
+
+
 def get_dbInsert_post(title,body,email):
     conn = connection.connection()
     try:

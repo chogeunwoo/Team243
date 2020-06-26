@@ -17,8 +17,8 @@ mail = Mail(app)
 def main():
   if 'username' in session:
     result = '%s' % escape(session['username'])
-
-    return render_template('main.html', loginId = result)
+    yourname = mysql_dao.get_dbSelect_myinfo(result)
+    return render_template('main.html', loginId = result, name = yourname)
   else:
     session['username'] = ''
     result = '%s' % escape(session['username'])
@@ -185,15 +185,19 @@ def register_route():
     reqid = request.form["id"]
     reqpw = request.form["pw"]
     reqphone_num = request.form["phone_num"]
-    content = mysql_dao.get_dbInsert_register(reqname,reqid,reqpw,reqphone_num)
+    if(reqname == '' or reqid == '' or reqpw == '' or reqphone_num == ''):
+      return "blank"
+    else:
+      content = mysql_dao.get_dbInsert_register(reqname,reqid,reqpw,reqphone_num)
+      return content
 
-  return content
 @app.route('/myinfo')
 def myinfo():
   
   if 'username' in session:
     result = '%s' % escape(session['username'])
-    return render_template('myinfo.html', loginId = result)
+    yourname = mysql_dao.get_dbSelect_myinfo(result)
+    return render_template('myinfo.html', loginId = result, name = yourname)
 
   else:
     session['username'] = ''
