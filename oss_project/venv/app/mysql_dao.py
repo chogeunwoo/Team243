@@ -197,13 +197,7 @@ def get_dbChange_post(ptitle,pbody,pno):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        pname = ptitle
-        sql = "UPDATE test.post SET ptitle =" + pname + ", pbody =" + pbody + "WHERE pno =" + pno
-        val = (ptitle,pbody,pno)
-        print(pname)
-        print(pbody)
-        print(pno)
-        cursor.execute(sql,val)
+        cursor.execute("UPDATE test.post SET ptitle = '%s', pbody = '%s' WHERE pno= %d"%(ptitle,pbody,(int(pno))))
         conn.commit()
     finally:
         cursor.close()
@@ -256,3 +250,17 @@ def get_dbSelect_password(email, name):
             result = row_data[0]
         return result
     return "fail"
+
+def get_dbInsert_comment(inputComment,loginId,pno):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "INSERT INTO comment (cbody, userId, pno) VALUES ('%s',' %s', '%s');"
+        val = (inputComment, loginId, int(pno))
+        cursor.execute(sql,val)
+        cursor.commit()
+    finally:
+        cursor.close()
+        return "true"
+
+    
