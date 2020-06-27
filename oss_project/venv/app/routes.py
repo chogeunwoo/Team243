@@ -70,15 +70,21 @@ def freeBoard():
     post = mysql_dao.get_dbSelect_post()
     return render_template('freeBoard.html', content=post, loginId=result)
 
-@app.route('/more', methods=['POST'])
+@app.route('/more', methods=['POST','GET'])
 def more():
   if request.method == "POST":
     pno = request.form["pno"]
     post = mysql_dao.get_dbSelect_pno(pno)
     if 'username' in session:
       result = '%s' % escape(session['username'])
-  print(result)
-  return render_template('more.html', content=post, loginId = result)
+    return render_template('more.html', content=post, loginId = result)
+  
+  else:
+    pno = request.form["pno"]
+    post = mysql_dao.get_dbSelect_pno(pno)
+    if 'username' in session:
+      result = '%s' % escape(session['username'])
+    return render_template('more.html', content=post, loginId = result)
 
 @app.route('/changePost', methods=['POST'])
 def changePost():
@@ -87,12 +93,15 @@ def changePost():
     post = mysql_dao.get_dbSelect_pno(pno)
     if 'username' in session:
       result = '%s' % escape(session['username'])
-    else:
-      session['username'] = ''
-      result = '%s' % escape(session['username'])
-    return redirect('/changePost')
-  
   return render_template('changePost.html', content=post, loginId = result)
+
+@app.route('/deletePost', methods=['POST'])
+def deletePost():
+  if request.method == "POST":
+    pno = request.form["pno"]
+    delete = mysql_dao.get_dbDelete_post(pno)
+  return redirect('/freeBoard')
+
 
 @app.route('/changePost_route', methods=['POST'])
 def changePost_route():
@@ -100,8 +109,8 @@ def changePost_route():
     pno = request.form["pno"]
     ptitle = request.form["ptitle"]
     pbody = request.form["pbody"]
-    update = mysql_dao.get_dbChange_post(pno,ptitle,pbody)
-  return update
+    update = mysql_dao.get_dbChange_post(ptitle,pbody,pno)
+  return redirect('/freeBoard')
     
 @app.route('/createPost')
 def createPost():
@@ -119,7 +128,16 @@ def createPost_route():
     email = session["username"]
     content = mysql_dao.get_dbInsert_post(ptitle,pbody,email)
   return content
-  
+
+@app.route('/createComment',methods=['POST'])
+def createComment():
+  if request.method == "POST":
+    pno = request.form["pno"]
+    userId = request.form["userId"]
+    inputComment = request.form["inputComment"]
+    comment =  mysql_dao.get_dbInsert_comment(pno,userId,inputComment)
+  return redirect('/freeBoard')
+
 @app.route('/health_center')
 def health_center():
   content = mysql_dao.get_centerSelect()

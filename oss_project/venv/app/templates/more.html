@@ -27,11 +27,14 @@
                 <span>
                   <form method="POST" action="/changePost">
                     <input type="text" name="pno" style="display:none;" value="{{ content.pno }}">
-                    <button type="submit" class="btn btn-primary btn-sm">글 수정</button>
+                    <button type="submit" class="btn btn-primary">글 수정</button>
                   </form>
-                </span> 
+                </span>
                 <span>
-                  <button type="button" class="btn btn-primary btn-sm" onclick="">글 삭제</button>
+                  <form method="POST" action="/deletePost">
+                    <input type="text" name="pno" style="display:none;" value="{{ content.pno }}">
+                    <button type="submit" class="btn btn-primary">삭제</button>
+                  </form>
                 </span>
                 {% else: %}
                 <p></p>
@@ -43,6 +46,17 @@
                 <p>내용: {{ content.pbody }}</p>
                 <hr/>
             </div>
+            <div class="col">
+              <h2>comment</h2><br>
+              <form method="POST" action="/createComment">
+                <input type="number" name="pno" value="{{ content.pno }}">
+                <input type="text" name="userId" value="{{ loginId }}" >
+                <textarea class="form-control" name="inputComment" rows="7" placeholder=" Please enter the comment"></textarea>
+                <div class="text-right">
+                  <button type="submit" class="btn btn-primary">댓글 작성</button>
+                </div>
+              </form>
+          </div>
         </div>
     </div>
     </section>
