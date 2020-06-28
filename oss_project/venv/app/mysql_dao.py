@@ -179,12 +179,11 @@ def get_dbSelect_diary():
         else:
             return "fail"
 
-def get_dbUpdate_diary(diary_id, diary_title, diary_body, diary_date):
+def get_dbUpdate_diary(diary_title, diary_body, diary_date, diary_id):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "UPDATE `test.diary` SET `diary_title` = %s `diary_body` = %s `diary_date` = %s WHERE `diary_id` = %s"
-        cursor.execute(sql, (diary_title, diary_body, diary_date, diary_id))
+        cursor.execute("UPDATE test.diary SET diary_title = '%s', diary_body = '%s', diary_date = '%s' WHERE diary_id = %d"%(diary_title, diary_body, diary_date, (int(diary_id))))
         conn.commit()
     finally:
         cursor.close()
