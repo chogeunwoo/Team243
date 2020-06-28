@@ -46,7 +46,7 @@
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="inputEmail"><b>Email</b><br>{{ name['id'] }}<br/></label>
+              <label for="inputEmail"><b>Email</b><br>{{ name['email'] }}<br/></label>
             </div>
 
             <div class="form-group col-md-6">
@@ -64,13 +64,26 @@
                 <label for="inputReason"><b>Purpose</b><br>To be Healthy<br/></label>
               </div>
 
-            </div>
-            <button class="btn btn-primary btn-lg active">
-              <a href = "/changeMyinfo">
-                  change
-              </a>
-          </button>
+            </div> 
           </form>
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <a href = "/changeMyinfo">
+                <button class="btn btn-primary">
+                  change
+                </button>
+              </a>
+            </div>
+            <div class="form-group col-md-6">
+              <a href = "/">
+                <button class="btn btn-primary">
+                  SmokeCalculator
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 </div>

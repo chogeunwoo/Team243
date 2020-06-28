@@ -80,7 +80,7 @@ def get_dbSelect_myinfo(email):
             for row_data in row :
                 json_object = {
                     "name": row_data[0],
-                    "id": row_data[1],
+                    "email": row_data[1],
                     "pw": row_data[2],
                     "phone_num": row_data[3]
                 }
@@ -88,6 +88,57 @@ def get_dbSelect_myinfo(email):
         else:
             return "fail"
 
+def get_dbSelect_id(id):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "SELECT * FROM test.post where email=" + "'" + id + "'"
+        cursor.execute(sql)
+        row_num = cursor.rowcount
+        
+    finally:
+        cursor.close()
+        if row_num > 0:
+            row = cursor.fetchall()
+            for row_data in row :
+                json_object = {
+                    "email": row_data[0],
+                    "name": row_data[1],
+                    "pw": row_data[2],
+                    "phone_num": row_data[3]
+                }
+            return json_object
+        else:
+            return "fail"
+
+def get_dbChange_changeMyinfo(email, name, pw, phone_num):
+    print(email, name, pw, phone_num,"디비 시작")
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE test.os_member SET name = '%s', pw = '%s', phone_num = '%s' WHERE email= '%s'"%(name, pw, phone_num, email))
+        conn.commit()
+    finally:
+        cursor.close()
+        cursor = conn.cursor()
+        sql = "SELECT name, email, pw, phone_num FROM test.os_member where email=" + "'" + email + "'"
+        cursor.execute(sql)
+        row_num = cursor.rowcount
+        
+        cursor.close()
+        if row_num > 0:
+            row = cursor.fetchall()
+            for row_data in row :
+                json_object = {
+                    "name": row_data[0],
+                    "email": row_data[1],
+                    "pw": row_data[2],
+                    "phone_num": row_data[3]
+                }
+            print(json_object,"디비 끝")
+            return json_object
+        else:
+            return "fail"
 
 def get_dbInsert_post(title,body,email):
     conn = connection.connection()
