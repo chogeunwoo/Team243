@@ -286,7 +286,7 @@ def diary_update_view():
     title = request.form["title"]
     body = request.form["body"]
     date = request.form["date"]
-    mysql_dao.get_dbUpdate_diary(diary_id, title, body, date)
+    mysql_dao.get_dbUpdate_diary( title, body, date,diary_id)
     return redirect("diary")
 
 @app.route('/diary_delete',methods = ['GET','POST'])
