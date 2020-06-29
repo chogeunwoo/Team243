@@ -42,16 +42,18 @@
     </div>
   </section><!-- End Health center Section -->
   <form>
-    <div class="form-group">
+  <div style="width : 1000px; margin : 0 auto;">
+      <div class="form-group">
       <label for="title">Title</label>
       <input type="text" class="form-control" id="title" name ="title" placeholder="title">
     </div>
     <div class="form-group">
       <label for="diary_body">diary_body</label>
-      <textarea cols="50" rows="30" class="form-control" id="body" name = "body" placeholder="body"></textarea>
+      <textarea cols="50" rows="15" class="form-control" id="body" name = "body" placeholder="body"></textarea>
     </div>
     <input type="date" min="1998-12-18" max="2023-12-31" id="date" name = "date"><br><br>
     <a href = "/"><button type="submit" class="btn btn-primary" onclick="DiaryGo()">Create Diary</button></a>
+  </div>
   </form>
 </main>
 {% endblock %}

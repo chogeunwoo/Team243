@@ -2,17 +2,19 @@
 {% block content %}
 <main id="main">
     <form method="POST" action = "/diary_update_view">
+      <div style="width : 1000px; margin : 0 auto;">
         <div class="form-group">
           <label for="title">Title</label>
           <input type="text" class="form-control" name="title" placeholder="title" value = "{{ trade.diary_title}}">
         </div>
         <div class="form-group">
           <label for="body">diary_body</label>
-          <textarea cols="50" rows="30" class="form-control" name="body" placeholder="body">{{ trade.diary_body }}</textarea>
+          <textarea cols="50" rows="15" class="form-control" name="body" placeholder="body">{{ trade.diary_body }}</textarea>
         </div>
         <input type="date" min="1998-12-18" max="2023-12-31" name="date" value="{{ trade.diary_date }}"><br><br>
         <input type = "text" name = "id" style = "display: none;" value="{{trade.diary_id}}">
         <button type = "submit" class="btn btn-primary">수정</button>
+      </div>
       </form>
 </main>
 {% endblock %}

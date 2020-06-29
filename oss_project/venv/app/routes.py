@@ -17,8 +17,8 @@ mail = Mail(app)
 def main():
   if 'username' in session:
     result = '%s' % escape(session['username'])
-    return render_template('main.html', loginId = result)
-
+    yourname = mysql_dao.get_dbSelect_myinfo(result)
+    return render_template('main.html', loginId = result, name = yourname)
   else:
     session['username'] = ''
     result = '%s' % escape(session['username'])
@@ -75,9 +75,10 @@ def more():
   if request.method == "POST":
     pno = request.form["pno"]
     post = mysql_dao.get_dbSelect_pno(pno)
+    comment = mysql_dao.get_dbSelect_comment_list(pno)
     if 'username' in session:
       result = '%s' % escape(session['username'])
-    return render_template('more.html', content=post, loginId = result)
+    return render_template('more.html', content=post, loginId = result, comment = comment)
   
   else:
     pno = request.form["pno"]
@@ -134,27 +135,58 @@ def createComment():
   if request.method == "POST":
     pno = request.form["pno"]
     userId = request.form["userId"]
-    inputComment = request.form["inputComment"]
-    comment =  mysql_dao.get_dbInsert_comment(pno,userId,inputComment)
+    cbody = request.form["cbody"]
+    comment =  mysql_dao.get_dbInsert_comment(cbody,userId,pno)
   return redirect('/freeBoard')
 
+@app.route('/changeComment',methods=['POST'])
+def changeComment():
+  if request.method == "POST":
+    cno = request.form["cno"]
+    comment = mysql_dao.get_dbSelect_comment(cno)
+    if 'username' in session:
+      result = '%s' % escape(session['username'])
+  return render_template('changeComment.html', comment=comment, loginId = result)
+
+@app.route('/changeComment_route',methods=['POST'])
+def changeComment_route():
+  if request.method == "POST":
+    cno = request.form["cno"]
+    cbody = request.form["cbody"]
+    comment = mysql_dao.get_dbChange_comment(cbody,cno)
+  return redirect('/freeBoard')
+
+@app.route('/deleteComment', methods=['POST'])
+def deleteComment():
+  if request.method == "POST":
+    cno = request.form["cno"]
+    commentDelete = mysql_dao.get_dbDelete_comment(cno)
+    return redirect('/freeBoard')
 @app.route('/health_center')
 def health_center():
   content = mysql_dao.get_centerSelect()
 
   if 'username' in session:
     result = '%s' % escape(session['username'])
-    return render_template('health_center.html', loginId = result)
+    return render_template('health_center.html', loginId = result, content = content)
 
   else:
     session['username'] = ''
     result = '%s' % escape(session['username'])
 
-  return redirect('/health_center')
+  return redirect('/health_center', content = content)
 
 @app.route('/login')
 def login():
-  return render_template('login.html')
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    return render_template('login.html', loginId = result)
+
+  else:
+    session['username'] = ''
+    result = '%s' % escape(session['username'])
+
+  return redirect('/login')
 
 @app.route('/login_route', methods=['GET', 'POST'])
 def login_route():
@@ -195,12 +227,38 @@ def register_route():
     reqid = request.form["id"]
     reqpw = request.form["pw"]
     reqphone_num = request.form["phone_num"]
-    content = mysql_dao.get_dbInsert_register(reqname,reqid,reqpw,reqphone_num)
+    if(reqname == '' or reqid == '' or reqpw == '' or reqphone_num == ''):
+      return "blank"
+    else:
+      content = mysql_dao.get_dbInsert_register(reqname,reqid,reqpw,reqphone_num)
+      return content
 
-  return content
+@app.route('/changeMyinfo_route', methods=['GET', 'POST'])
+def changeMyinfo_route(): 
+  if request.method == "POST":
+    reqname = request.form["name"]
+    reqid = request.form["id"]
+    reqpw = request.form["pw"]
+    reqphone_num = request.form["phone_num"]
+    if(reqname == '' or reqid == '' or reqpw == '' or reqphone_num == ''):
+      return "blank"
+    else:
+      content = mysql_dao.get_dbInsert_changeMyinfo(reqname,reqid,reqpw,reqphone_num)
+      return content
+
 @app.route('/myinfo')
 def myinfo():
-  return render_template('myinfo.html')
+  
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    yourname = mysql_dao.get_dbSelect_myinfo(result)
+    return render_template('myinfo.html', loginId = result, name = yourname)
+
+  else:
+    session['username'] = ''
+    result = '%s' % escape(session['username'])
+
+  return redirect('/myinfo')
 
 @app.route('/changeMyinfo')
 def changeMyinfo():
@@ -209,7 +267,13 @@ def changeMyinfo():
 @app.route('/diary')
 def diary():
   content = mysql_dao.get_dbSelect_diary()
-  return render_template('diary.html',trade = content)
+
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    return render_template('diary.html', loginId = result, trade = content)
+
+  else:
+    return redirect('/')
 
 @app.route('/new_diary')
 def new_diary():  

@@ -1,65 +1,138 @@
+<style>
+  #btn1 {
+    float: left;
+    margin-right: 10px;
+  }
+
+  #btn2 {
+    float: left;
+  }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+  function loginGo() {
+    alert("로그인을 해주세요")
+    location.href = '/login'
+  }
+</script>
+<script>
+  function create_Comment() {
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var result = this.responseText;
+        const res = JSON.parse(result);
+        console.log(res, "script");
+        for (var i = 0; i <= res[0]; i++) {
+          txt = '';
+          txt += '<p>' + res[i].cbody + '<p>'
+          txt += '<p>' + res[i].userId + '<p>'
+          txt += '<p>' + res[i].pno + '<p>'
+          txt += '<hr>'
+          document.getElementById("function_result").innerHTML = txt;
+        }
+      }
+    };
+
+    var parameter = 'cbody=' + document.getElementById("cbody").value + '&userId=' + document.getElementById("userId").value + '&pno=' + document.getElementById("pno").value;
+    console.log(parameter);//입력 값 콘솔에 출력
+    xhttp.open("post", "/createComment", true);
+    xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhttp.send(parameter);//입력 값 서버에 전송
+  }
+</script>
+
 {% extends "sub_layout.html" %}
 {% block content %}
 <main id="main">
-    <section class="breadcrumbs">
-        <div class="container">
-  
-          <div class="d-flex justify-content-between align-items-center">
-            <h2>Free Board</h2>
-            <ol>
-              <li><a href="/">Home</a></li>
-              <li><a href="/services">Our Services</a></li>
-            </ol>
-          </div>
-  
-        </div>
-    </section>
-    <section class="services">
-      <div style="width:960px; margin:0 auto" >
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <h2>{{ content.ptitle }}</h2>
-                </div>
-                <div class="col-md-auto">
-                </div>
-                {% if (loginId == content.email): %}
-                <span>
-                  <form method="POST" action="/changePost">
-                    <input type="text" name="pno" style="display:none;" value="{{ content.pno }}">
-                    <button type="submit" class="btn btn-primary">글 수정</button>
-                  </form>
-                </span>
-                <span>
-                  <form method="POST" action="/deletePost">
-                    <input type="text" name="pno" style="display:none;" value="{{ content.pno }}">
-                    <button type="submit" class="btn btn-primary">삭제</button>
-                  </form>
-                </span>
-                {% else: %}
-                <p></p>
-                {% endif %}
-            </div>
+  <section class="breadcrumbs">
+    <div class="container">
 
-            <div class="text-center">
-                <p><h3>제목: {{ content.ptitle }}</h2></p>
-                <p>내용: {{ content.pbody }}</p>
-                <hr/>
-            </div>
-            <div class="col">
-              <h2>comment</h2><br>
-              <form method="POST" action="/createComment">
-                <input type="number" name="pno" value="{{ content.pno }}">
-                <input type="text" name="userId" value="{{ loginId }}" >
-                <textarea class="form-control" name="inputComment" rows="7" placeholder=" Please enter the comment"></textarea>
-                <div class="text-right">
-                  <button type="submit" class="btn btn-primary">댓글 작성</button>
-                </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Free Board</h2>
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li><a href="/services">Our Services</a></li>
+          <li><a href="/freeBoard">Free Board</a></li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+  <section class="services">
+    <div style="width:960px; margin:0 auto">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h2>{{ content.ptitle }}</h2>
+          </div>
+          <div class="col-md-auto">
+          </div>
+          {% if (loginId == content.email): %}
+          <div id="btn1">
+            <form method="POST" action="/changePost">
+              <input type="text" name="pno" style="display:none;" value="{{ content.pno }}">
+              <button type="submit" class="btn btn-primary">글 수정</button>
+            </form>
+          </div>
+          <div id="btn2">
+            <form method="POST" action="/deletePost">
+              <input type="text" name="pno" style="display:none;" value="{{ content.pno }}">
+              <button type="submit" class="btn btn-primary">삭제</button>
+            </form>
+          </div>
+          {% else: %}
+          <p></p>
+          {% endif %}
+        </div>
+        <div class="text-center">
+          <p>
+          <h3>제목: {{ content.ptitle }}</h2>
+            </p>
+            <p>내용: {{ content.pbody }}</p>
+            <hr />
+        </div>
+        <div id="function_result">
+          {% for comment in comment %}
+          <div>
+            <p>{{ comment.userId }} : {{ comment.cbody }}</p>
+
+            {% if (loginId == comment.userId): %}
+            <div id="btn1">
+              <form method="POST" action="/changeComment">
+                <input type="text" name="cno" style="display:none;" value="{{ comment.cno }}">
+                <button type="submit" class="btn btn-primary">댓글 수정</button>
               </form>
+            </div>
+            <div id="btn2">
+              <form method="POST" action="/deleteComment">
+                <input type="text" name="cno" style="display:none;" value="{{ comment.cno }}">
+                <button type="submit" class="btn btn-primary">삭제</button>
+              </form>
+            </div>
+            <br>
+            {% else: %}
+            {% endif %}
+            <hr>{% endfor %}
           </div>
         </div>
+        {% if(loginId==''): %}
+        <div class="col">
+          <textarea class="form-control" id="inputComment" rows="7" placeholder=" Please enter the comment"></textarea>
+          <a type="button" class="btn btn-primary btn-user btn-block" onclick="loginGo()">submit</a>
+        </div>
+        {% else: %}
+        <div class="col">
+          <input type="number" id="pno" style="display:none;" value="{{ content.pno }}">
+          <input type="text" id="userId" style="display:none;" value="{{ loginId }}">
+          <textarea class="form-control" id="cbody" rows="7" placeholder=" Please enter the comment"></textarea>
+          <a type="button" class="btn btn-primary btn-user btn-block" onclick="create_Comment()">submit</a>
+        </div>
+        {% endif %}
+      </div>
     </div>
-    </section>
-    
+  </section>
+
 </main>
 {% endblock %}
