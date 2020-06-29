@@ -1,0 +1,45 @@
+{% extends "sub_layout.html" %}
+{% block content %}
+<main id="main">
+
+    <!-- ======= Our Services Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>댓글 수정</h2>
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/services">Our Services</a></li>
+            <li><a href="/freeBoard">Free Board</a></li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- End Our Services Section -->
+    <section class="services">
+        <div style="width:960px; margin:0 auto" >
+          <div class="container">
+            <form method="POST" action="/changeComment_route">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <input type="text" name="cno" style="display:none;" value="{{ comment.cno }}">
+                    <label for="inputEmail4">User_id</label><br>
+                    <label><h5>{{ loginId }}</h5></label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPbody">comment</label>
+                  <textarea class="form-control" name="cbody" rows="10">{{ comment.cbody }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">수정 완료</button>
+              </form>
+              
+              <hr/>
+              
+          </div>
+        </div>
+        
+      </section><!-- End Services Section -->
+</main>
+{% endblock %}

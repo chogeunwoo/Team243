@@ -1,69 +1,65 @@
 {% extends "sub_layout.html" %}
 {% block content %}
+<style>
+  #limit_contents {
+    display: inline-block;
+    width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+</style>
+<main id="main">
 
-    <main id="main">
+  <!-- ======= Our Services Section ======= -->
+  <section class="breadcrumbs">
+    <div class="container">
 
-        <!-- ======= Our Services Section ======= -->
-        <section class="breadcrumbs">
-          <div class="container">
-    
-            <div class="d-flex justify-content-between align-items-center">
-              <h2>Free Board</h2>
-              <ol>
-                <li><a href="/">Home</a></li>
-                <li><a href="/services">Our Services</a></li>
-              </ol>
-            </div>
-    
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Free Board</h2>
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li><a href="/services">Our Services</a></li>
+        </ol>
+      </div>
+
+    </div>
+  </section><!-- End Our Services Section -->
+
+  <!-- ======= Services Section ======= -->
+  <section class="services">
+    <div style="width:960px; margin:0 auto">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h2>자유게시판</h1>
           </div>
-        </section><!-- End Our Services Section -->
-    
-        <!-- ======= Services Section ======= -->
-        <section class="services">
-          <div style="width:960px; margin:0 auto" >
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <h2>자유게시판</h1>
-                    </div>
-                    <div class="col-md-auto">
-                    </div>
-                    {% if(loginId==''): %}
-
-                    {% else: %}
-                      <button type="button" class="btn btn-primary btn-sm" onclick="location.href='/createPost'">글 등록</button>
-                    {% endif %}
-                </div>
-                
-                <hr/>
-                {% for contents in content %}
-                <div class="text-center">
-                    <p><h3>제목: {{ contents.ptitle }}</h2></p>
-                    <p>내용: {{ contents.pbody }}</p>
-                    <form method="POST" action="/more">
-                      <input type="text" name="pno" style="display:none;" value="{{ contents.pno }}">
-                      <button type="submit" class="btn btn-primary btn-sm">MORE</button>
-                    </form>
-                    <hr/>
-                </div>
-                {% endfor %}
-                
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                      <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                      </li>
-                    </ul>
-                  </nav>
-            </div>
+          <div class="col-md-auto">
           </div>
-          
-        </section><!-- End Services Section -->
-    </mian>
-{% endblock %}
+          {% if(loginId==''): %}
+
+          {% else: %}
+          <button type="button" class="btn btn-primary btn-sm" onclick="location.href='/createPost'">글 등록</button>
+          {% endif %}
+        </div>
+
+        <hr />
+        {% for contents in content %}
+        <div class="text-center">
+          <p>
+          <h3>제목: {{ contents.ptitle }}</h2>
+            </p>
+            <p id="limit_contents">내용: {{ contents.pbody }}</p>
+            <form method="POST" action="/more">
+              <input type="text" name="pno" style="display:none;" value="{{ contents.pno }}">
+              <button type="submit" class="btn btn-primary btn-sm">MORE</button>
+            </form>
+            <hr />
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </section><!-- End Services Section -->
+  </mian>
+  {% endblock %}

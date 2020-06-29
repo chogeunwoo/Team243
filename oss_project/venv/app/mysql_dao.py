@@ -346,16 +346,85 @@ def get_dbSelect_password(email, name):
         return result
     return "fail"
 
-def get_dbInsert_comment(inputComment,loginId,pno):
+def get_dbInsert_comment(cbody,userId,pno):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "INSERT INTO comment (cbody, userId, pno) VALUES ('%s',' %s', '%s');"
-        val = (inputComment, loginId, int(pno))
+        sql = "INSERT INTO comment (cbody, userId, pno) VALUES (%s, %s, %s);"
+        val = (cbody, userId, pno)
         cursor.execute(sql,val)
-        cursor.commit()
+        conn.commit()
     finally:
         cursor.close()
         return "true"
 
-    
+def get_dbSelect_comment_list(pno):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM test.comment WHERE pno = %d"%int(pno))
+        conn.commit()
+        row_num = cursor.rowcount
+    finally:
+        cursor.close()
+        if row_num > 0:
+            row = cursor.fetchall()
+            comment_list=[]
+            for row_data in row:
+                comment_list.append(
+                    {
+                        'cno': row_data[0],
+                        'cbody': row_data[1],
+                        'userId': row_data[2],
+                        'pno': row_data[3]
+                    }
+                )
+            return comment_list 
+        else:
+            return "fail"
+
+def get_dbSelect_comment(cno):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM test.comment WHERE cno = %d"%int(cno))
+        
+
+        conn.commit()
+        row_num = cursor.rowcount
+    finally:
+        cursor.close()
+        if row_num > 0:
+            row = cursor.fetchall()
+            for row_data in row :
+                json_object = {
+                    'cno': row_data[0],
+                    "cbody": row_data[1],
+                    "userId": row_data[2],
+                    "pno": row_data[3]
+                }
+            return json_object
+        else:
+            return "fail"
+
+def get_dbChange_comment(cbody,cno):
+    conn = connection.connection()
+    try:
+        print(cbody,cno)
+        cursor = conn.cursor()
+        cursor.execute("UPDATE test.comment SET cbody = '%s' WHERE cno= %d"%(cbody,(int(cno))))
+        conn.commit()
+    finally:
+        cursor.close()
+        return "true"
+
+def get_dbDelete_comment(cno):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "DELETE FROM test.comment WHERE cno =" + cno
+        cursor.execute(sql)
+        conn.commit()
+    finally:
+        cursor.close()
+        return "true"
