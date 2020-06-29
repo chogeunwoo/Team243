@@ -232,11 +232,7 @@ def register_route():
     else:
       content = mysql_dao.get_dbInsert_register(reqname,reqid,reqpw,reqphone_num)
       return content
-<<<<<<< HEAD
 
-@app.route('/myinfo')
-def myinfo():
-=======
 
 @app.route('/changeMyinfo_route', methods=['GET', 'POST'])
 def changeMyinfo_route(): 
@@ -253,36 +249,15 @@ def changeMyinfo_route():
 
 @app.route('/myinfo')
 def myinfo():
-  
->>>>>>> chogeunwoo
   if 'username' in session:
     result = '%s' % escape(session['username'])
     yourname = mysql_dao.get_dbSelect_myinfo(result)
     return render_template('myinfo.html', loginId = result, name = yourname)
-<<<<<<< HEAD
   else:
     session['username'] = ''
     result = '%s' % escape(session['username'])
     return redirect('/myinfo')
 
-@app.route('/changeMyinfo_route', methods=['POST'])
-def changeMyinfo_route():
-    if 'username' in session:
-      email = '%s' % escape(session['username'])
-      if request.method == "POST":
-        name = request.form["name"]
-        pw = request.form["pw"]
-        phone_num = request.form["phone_num"]
-        update = mysql_dao.get_dbChange_changeMyinfo(email, name, pw, phone_num)
-      return render_template('myinfo.html', name = update)
-=======
-
-  else:
-    session['username'] = ''
-    result = '%s' % escape(session['username'])
-
-  return redirect('/myinfo')
->>>>>>> chogeunwoo
 
 @app.route('/changeMyinfo')
 def changeMyinfo():
