@@ -1,3 +1,37 @@
+<style>
+  .box-solid {
+    border-style: solid ;
+    color: #1e4356;
+    width: 500px;
+    height: 26.5%;
+    padding: 20px;
+    margin:100px 500px 0px 750px; 
+    border-radius: 50px;
+    }
+</style>
+
+<style>
+  .box-solid2 {
+    border-style: hidden ;
+    width: 200px;
+    height:20%;
+    margin-top: 0px;
+    margin-right: 400px;
+    margin-bottom: 100px;
+    margin-left: 985px;
+    }
+</style>
+
+<style> 
+  #btn_group button {
+   border: 1px solid skyblue; 
+   background-color: rgba(0,0,0,0); 
+   color: skyblue; padding: 5px; 
+   } 
+</style>
+
+
+
 {% extends "sub_layout.html" %}
 
 {% block content %}
@@ -21,57 +55,66 @@
   </div>
 </section>
 
-<div class="container">
-  <div class="row">
-      <div class="col-6">
-        <div style="border: 3px; 
-        float: left; height: auto; width: 700px; 
-        margin: 15px 25px 15px 0px; padding: 30px;">
-        
-        <form>
-          <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="inputName"><b>Name</b><br>{{ name['name'] }}<br/></label>
-              </div>
 
-              <div class="form-group col-md-6">
-                  <label for="inputPhoneNumber"><b>Phone Number</b><br>{{ name['phone_num'] }}<br/></label>
-                </div>
+<form>
+  <div class="box-solid">
 
-          </div>
-
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputEmail"><b>Email</b><br>{{ name['email'] }}<br/></label>
-            </div>
-
-            <div class="form-group col-md-6">
-              <label for="inputPassword"><b>Password</b><br>{{ name['pw'] }}<br/></label>
-            </div>
-
-          </div>
-          </form>
-
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <a href = "/changeMyinfo">
-                <button class="btn btn-primary">
-                  change
-                </button>
-              </a>
-            </div>
-            <div class="form-group col-md-6">
-              <a href = "/">
-                <button class="btn btn-primary">
-                  SmokeCalculator
-                </button>
-              </a>
-            </div>
-          </div>
+    <div class="form-group row">
+      <label for="staticEmail" class="col-sm-2 col-form-label"><b>Name</b></label>
+      <div class="col-sm-10">
+        <div style="border:1px; margin: 0px 0px 0px 20px;">
+          <input type="text" readonly class="form-control-plaintext" id="staticName" value="{{ name['name'] }}">
         </div>
       </div>
     </div>
-</div>
-</div>
+
+    <div class="form-group row">
+      <label for="staticEmail" class="col-sm-2 col-form-label"><b>Email</b></label>
+      <div class="col-sm-10">
+        <div style="border:1px; margin: 0px 0px 0px 20px;">
+        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{ name['email'] }}">
+      </div>
+    </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="staticPassword" class="col-sm-2 col-form-label"><b>Password</b></label>
+      <div class="col-sm-10">
+        <div style="border:1px; margin: 0px 0px 0px 20px;">
+        <input type="text" readonly class="form-control-plaintext" id="staticPassword" value="{{ name['pw'] }}">
+      </div>
+    </div>
+    </div>
+
+    <div class="form-group row">
+      <label for="staticPhone_num" class="col-sm-2 col-form-label"><b>Call</b></label>
+      <div class="col-sm-10">
+        <div style="border:1px; margin: 0px 0px 0px 20px;">
+          <input type="text" readonly class="form-control-plaintext" id="staticPhone_num" value="{{ name['phone_num'] }}">
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+  <div class="box-solid2">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <a href = "/changeMyinfo">
+          <button class="btn btn-primary">
+            change
+          </button>
+       </a>
+    </div>
+    <div class="form-group col-md-6">
+       <a href = "/">
+          <button class="btn btn-primary">
+            SmokeCalculator
+          </button>
+       </a>
+    </div>
+  </div>
+  
+
 
 {% endblock %}
