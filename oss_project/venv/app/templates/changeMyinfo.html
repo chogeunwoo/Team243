@@ -23,9 +23,6 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-lg-6" style = "margin: 50px 50px 0px 0px">
-      <img src="{{url_for('static', filename='img/Non-smoking.PNG')}}" class="img-fluid" alt="" width="250px">
-    </div>
 
       <div class="col-6">
         <div style="border: 3px; 
@@ -33,32 +30,30 @@
         margin: 15px 25px 15px 0px; padding: 30px;">
         
         <form method="POST" action="/changeMyinfo_route">
-            <div class="form-group">
+            <div class="form-row">
+              <div class="form-group col-md-6" >
                 <label for="inputName"><b>Name</b></label>
                 <input name = "name" type="text" class="form-control" value="{{ name['name'] }}">
               </div>
-
-            <div class="form-row">
               <div class="form-group col-md-6" >
-                <label><b>Email</b><br><h3>{{ name['name'] }}</h3></label></br></label>
+                <label for="inputPhoneNumber"><b>Phone number</b></label>
+                <input name = "phone_num" type="text" class="form-control" value="{{ name['phone_num'] }}">
               </div>
-
+              <div class="form-group col-md-6" >
+                <label><b>Email</b></label>
+                <br><h5>{{ name['email'] }}</h5></label></br>
+              </div>
               <div class="form-group col-md-6">
                 <label for="inputPassword"><b>Password</b></label>
                 <input name = "pw" type="password" class="form-control" value="{{ name['pw'] }}">
               </div>
             </div>
-
-            <div class="form-group">
-              <label for="inputPhoneNumber"><b>Phone number</b></label>
-              <input name = "phone_num" type="text" class="form-control" value="{{ name['phone_num'] }}">
-            </div>
-          
             <button type="submit" class="btn btn-primary">수정</button>
         </form>
       </div>
     </div>
-</div>
+
+  </div>
 </div>
 
 {% endblock %}
