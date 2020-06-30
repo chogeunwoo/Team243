@@ -257,23 +257,23 @@ def get_dbDelete_post(pno):
         cursor.close()
         return "true"
 
-def get_dbInsert_diary(diary_title, diary_body, diary_date):
+def get_dbInsert_diary(diary_title, diary_body, diary_date,result):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "INSERT INTO diary (diary_title, diary_body, diary_date) VALUES (%s, %s, %s);"
-        val = (diary_title, diary_body, diary_date)
+        sql = "INSERT INTO diary (diary_title, diary_body, diary_date,diary_login_id) VALUES (%s, %s, %s,%s);"
+        val = (diary_title, diary_body, diary_date,result)
         cursor.execute(sql,val)
         conn.commit()
     finally:
         cursor.close()
         return "true"
 
-def get_dbSelect_diary():
+def get_dbSelect_diary(result):
     conn = connection.connection()
     try:
         cursor = conn.cursor()
-        sql = "SELECT diary_id, diary_title, diary_body, diary_date FROM test.diary"
+        sql = "SELECT diary_id, diary_title, diary_body, diary_date FROM test.diary WHERE diary_login_id = '" + result + "'"
         cursor.execute(sql)
         conn.commit()
         row_num = cursor.rowcount
@@ -291,7 +291,9 @@ def get_dbSelect_diary():
                         'diary_date': row_data[3]
                     }
                 )
-            return post
+            #json.dumps(row)
+            # print(json.dumps(row))
+            return post #json.dumps(row)
         else:
             return "fail"
 

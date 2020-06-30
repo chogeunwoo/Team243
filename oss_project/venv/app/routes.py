@@ -293,11 +293,10 @@ def changeMyinfo():
 
 @app.route('/diary')
 def diary():
-  content = mysql_dao.get_dbSelect_diary()
-
   if 'username' in session:
     result = '%s' % escape(session['username'])
-    return render_template('diary.html', loginId = result, trade = content)
+    content = mysql_dao.get_dbSelect_diary(result)
+    return render_template('diary.html', trade = content)
 
   else:
     return redirect('/')
@@ -309,11 +308,13 @@ def new_diary():
 
 @app.route('/diary_route', methods=['GET', 'POST'])
 def diary_route():
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
   if request.method == "POST":
     title = request.form["title"]
     body = request.form["body"]
     date = request.form["date"]
-    content = mysql_dao.get_dbInsert_diary(title, body, date)
+    content = mysql_dao.get_dbInsert_diary(title, body, date, result)
     return content
     
 @app.route('/diary_more',methods =['GET','POST'])
