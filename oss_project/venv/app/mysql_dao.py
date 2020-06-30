@@ -1,18 +1,74 @@
 import pymysql
 import connection
 import json
+import datetime
+
+def get_dbSelect_stop2(email):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "SELECT * FROM test.stop_smoke where email=" + "'" + email + "'"
+        cursor.execute(sql)
+        row_num = cursor.rowcount
+    finally:
+        cursor.close()
+        post=[]
+        if row_num > 0:
+            row = cursor.fetchall()
+            now = datetime.datetime.now().date()
+            for row_data in row :
+                post.append(
+                    {
+                        "email": row_data[0],
+                        "smoke_amount": row_data[1],
+                        "smoke_date": row_data[2],
+                        "smoke_now_date": now,
+                        "smoke_reason": row_data[3]
+                    }
+                )
+            result_date = post[0]['smoke_now_date'] - post[0]['smoke_date']
+
+            post.append(result_date.days)
+            return post
+        else:
+            return "fail"
+
+def get_dbSelect_stop(email):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "SELECT * FROM test.stop_smoke where email=" + "'" + email + "'"
+        cursor.execute(sql)
+        row_num = cursor.rowcount
+    finally:
+        cursor.close()
+        if row_num > 0:
+            return "fail"
+        else:
+            return "true"
 
 def get_dbInsert_stop(email, smoke_amount, smoke_date, smoke_reason):
     conn = connection.connection()
     try:
+        sql = "SELECT email FROM test.stop_smoke where email =" + "'" + email + "'"
         cursor = conn.cursor()
-        sql = "INSERT INTO post (email, smoke_amount, smoke_date, smoke_reason) VALUES (%s, %s, %s, %s);"
-        val = (email, smoke_amount, smoke_date, smoke_reason)
-        cursor.execute(sql,val)
-        conn.commit()
+        cursor.execute(sql)
+        row_num = cursor.rowcount
     finally:
         cursor.close()
-        return "true"
+    if row_num > 0:
+        return "fail"
+    else:
+        try:
+            cursor = conn.cursor()
+            sql = "INSERT INTO stop_smoke (email, smoke_amount, smoke_date, smoke_reason) VALUES (%s, %s, %s, %s);"
+            val = (email, smoke_amount, smoke_date, smoke_reason)
+            cursor.execute(sql,val)
+            conn.commit()
+        finally:
+            cursor.close()
+            createInfo = 1
+            return createInfo
 
 def get_dbInsert_register(name, email, pw, phone_num):
     conn = connection.connection()
@@ -235,9 +291,7 @@ def get_dbSelect_diary():
                         'diary_date': row_data[3]
                     }
                 )
-            #json.dumps(row)
-            # print(json.dumps(row))
-            return post #json.dumps(row)
+            return post
         else:
             return "fail"
 

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect, escape
 import mysql_dao
 from flask_mail import Mail, Message
 import smtplib
+import datetime
  
 app = Flask(__name__)
 
@@ -28,25 +29,26 @@ def main():
 def stopSmoking():
   if 'username' in session:
     result = '%s' % escape(session['username'])
-    yourname = mysql_dao.get_dbSelect_myinfo(result)
-    return render_template('stopSmoking.html', loginId = result, name = yourname)
+    yourinfo = mysql_dao.get_dbSelect_stop(result)
+    yourinfo2 = mysql_dao.get_dbSelect_stop2(result)
+    return render_template('stopSmoking.html', loginId = result, name = yourinfo, calcu = yourinfo2)
   else:
     session['username'] = ''
     result = '%s' % escape(session['username'])
     return redirect('/stopSmoking')
 
-@app.route('/stopSmoking_route')
+@app.route('/stopSmoking_route', methods=['post', 'get'])
 def stopSmoking_route():
   if request.method == "POST":
+    smokeAmount = request.form["smokeamount"]
+    smokeDate = request.form["smokedate"]
+    smokeReason = request.form["smokereason"]
     if 'username' in session:
       result = '%s' % escape(session['username'])
-    smokeAmount = request.form["smokeAmount"]
-    smokeDate = request.form["smokeDate"]
-    smokeReason = request.form["smokeReason"]
     if(smokeAmount == '' or smokeDate == '' or smokeReason == ''):
       return "blank"
     post = mysql_dao.get_dbInsert_stop(result, smokeAmount, smokeDate, smokeReason)
-  return render_template('changePost.html', result=post, loginId = result)
+    return post
 
 @app.route('/contact')
 def contact():
@@ -173,9 +175,6 @@ def createComment():
     comment =  mysql_dao.get_dbInsert_comment(cbody,userId,pno)
     comment1 = mysql_dao.get_dbSelect_comment_list(pno)
     last_comment = comment1[-1]
-    print(last_comment,"dsssssssssssssssss")
-    print(last_comment["cno"],"dsssssssssssssssss")
-    json_object = {"userId": userId, "cbody": cbody}
   return last_comment
 
 @app.route('/changeComment',methods=['POST'])

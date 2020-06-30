@@ -1,28 +1,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-  function registerGO() {
+  function stopGo() {
     var xhttp = new XMLHttpRequest();
-    
+
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        var member = this.responseText;
-
-        if (member == "fail") {
-          alert("Try again");
-        }
-        else if(member == "blank"){
-          alert("Please enter all values.");
-        }
-        else {
-          location.href = '/'
-        }
+        location.reload();
       }
     };
-    
-    var parameter = 'smokeAmount=' + document.getElementById("defaultRegisterFormName").value 
-                  + '&smokeDate=' + document.getElementById("defaultRegisterFormId").value 
-                  + '&smokeReason=' + document.getElementById("defaultRegisterFormPhoneNumber").value;
 
+    var parameter = 'smokeamount=' + document.getElementById("smokeAmount").value + '&smokedate=' + document.getElementById("smokeDate").value + '&smokereason=' + document.getElementById("smokeReason").value;
     xhttp.open("post", "/stopSmoking_route", true);
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send(parameter);//입력 값 서버에 전송
@@ -47,49 +34,164 @@
 
 <main id="main">
 
-    <!-- ======= Contact Section ======= -->
-    <section class="breadcrumbs">
-      <div class="container">
+  <!-- ======= Contact Section ======= -->
+  <section class="breadcrumbs">
+    <div class="container">
 
-        <div class="d-flex justify-content-between align-items-center">
-          <h2>Stop Smoking</h2>
-          <ol>
-            <li><a href="/">Home</a></li>
-            <li>Stop Smoking</li>
-          </ol>
-        </div>
-
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Stop Smoking</h2>
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li>Stop Smoking</li>
+        </ol>
       </div>
-    </section><!-- End Contact Section -->
 
-    <section>
-      <div style="width: 55%; float:none; margin:0 auto" >
-        <div class="col-11">
-            <div class="p-5">
-              <div class="text-center">
-                <h1 class="h4 text-gray-900 mb-4">Welcome Stop Smoking!</h1>
-              </div>
-              <hr>
-                  <p style="font-weight: bold;">하루 평균 흡연량 : </p>
-                  <input id="smokeAmount" class="form-control form-control-user" type="number" placeholder=" 단위 : 갑 " >
-                  <hr>
-                  <p style="font-weight: bold;">금연 시작 날짜 : </p>
-                  <input id="smokeDate" class="form-control form-control-user" type="date">
-                  <hr>
-                  <p style="font-weight: bold;">금연을 결심한 이유 : </p>
-                  <textarea id="smokeReason" class="form-control form-control-user" type="text"></textarea>
-                  <br>
-                <a class="btn btn-primary btn-user btn-block" onclick="stopGo()">Let's quit smoking</a>
-            </div>
+    </div>
+  </section><!-- End Contact Section -->
+  {% if(name=="fail"): %}
+  <section>
+    <div style="width: 55%; float:none; margin:0 auto">
+      <div class="col-11">
+        <div class="p-5">
+          <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">오늘은 금연한지 {{ calcu[1] }} 일째!</h1>
           </div>
+          <hr>
+          <p style="font-weight: bold;">당신은 {{ calcu[0].smoke_date.year}}년 {{ calcu[0].smoke_date.month}}월
+            {{ calcu[0].smoke_date.day}}일 부터</p>
+          <p style="font-weight: bold;">오늘까지 금연으로 {{calcu[1]*4500}}원을 절약하셨습니다</p>
+          {% if(calcu[1] <= 1): %}
+          <p style="font-weight: bold;">금연 {{calcu[1]}}일차인 당신의 신체에서는 심장마비 위험이 떨어지고, 혈압 정상화, 신체 활동이 용이해지는 변화가 생겼습니다</p>
+          {% elif(calcu[1] <= 2): %}
+          <p style="font-weight: bold;">금연 {{calcu[1]}}일차인 당신의 신체에서는 신경 말단 부위가 니코틴이 사라진 것에 적응하며, 후각과 미각 능력이 향상되는 변화가
+            생겼습니다</p>
+          {% elif(calcu[1] <= 3): %}
+          <p style="font-weight: bold;">금연 {{calcu[1]}}일차인 당신의 신체에서는 체내 니코틴 수치가 고갈이되고, 기관지가 이완되고 호흡이 쉬워졌습니다. 폐활량도 증가하는
+            변화가 생겼습니다</p>
+          {% elif(calcu[1] <= 14): %}
+          <p style="font-weight: bold;">금연 {{calcu[1]}}일차인 당신의 신체에서는 잇몸, 치아 혈액 순환이 비흡연자와 같아지고, 걷기가 쉬워지는 변화가 생겼습니다</p>
+          {% elif(calcu[1] <= 21): %}
+          <p style="font-weight: bold;">금연 {{calcu[1]}}일차인 당신의 신체에서는 폐의 작용이 훨씬 좋아지고 운동도 훨씬 쉬워지는 변화가 생겼습니다</p>
+          {% elif(calcu[1] <= 28): %}
+          <p style="font-weight: bold;">금연 {{calcu[1]}}일차인 당신의 신체에서는 금연으로 인한 불안, 우울, 분노 사라지고, 폐 기능 개선, 심장마비 위험이 더욱 줄어드는
+            변화가 생겼습니다</p>
+          {% elif(calcu[1] <= 30): %}
+          <p style="font-weight: bold;">금연 {{calcu[1]}}일차인 당신은 금연 성공확률 월등히 상승합니다!!</p>
+          {% elif(calcu[1] <= 90): %}
+          <p style="font-weight: bold;">금연 {{calcu[1]}}일차인 당신의 신체에서는 남자의 경우 정자 수가 증가하며 성기능이 향상됩니다. 임신 3~4개월 전 금연한 여성은
+            저체중아 출산 위험이 비흡연 여성과 같아지는 변화가 생겼습니다</p>
+          {% elif(calcu[1] <= 180): %}
+          <p style="font-weight: bold;">금연 {{calcu[1]}}일차인 당신의 신체에서는 기침·피곤·산소 부족과 같은 증상이 모두 감소하고, 폐의 섬모가 다시 자라 폐 자체 기능이
+            정상화되면서 감염이 줄어듭니다. 신체 전반적인 에너지 수준 또한 높아지는 변화가 생겼습니다</p>
+          {% elif(calcu[1] <= 365): %}
+          <p style="font-weight: bold;">금연 {{calcu[1]}}일차인 당신의 신체에서는 심장마비로 인한 사망 위험이 흡연자에 비해 절반으로 떨어지는 변화가 생겼습니다</p>
+          {% elif(calcu[1] <= 1825): %}
+          <p style="font-weight: bold;">금연 {{calcu[1]}}일차인 당신의 신체에서는 동맥 및 혈관이 넓어지고, 심장마비 사망 위험이 비흡연자와 거의 같아지는 변화가 생겼습니다
+          </p>
+          {% elif(calcu[1] <= 3650): %}
+          <p style="font-weight: bold;">금연 {{calcu[1]}}일차인 당신의 신체에서는 폐암으로 인한 사망 위험이 흡연자의 절반으로 감소하고, 구강, 인후, 식도, 췌장암 발병율이
+            절반으로 감소되는 변화가 생겼습니다</p>
+          {% else: %}
+          <p style="font-weight: bold;">{{loginId}}님, 금연을 축하드립니다!! 앞으로도 건강한 생활을 유지하시기 바랍니다!!^^</p>
+          {% endif %}
+          <p style="font-weight: bold;">"{{calcu[0].smoke_reason}}" 잊지 않으셨죠?</p>
+          <hr>
+          <br>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
+  <!-- ======= Tetstimonials Section ======= -->
+  <section>
+    <div class="container">
+      <div class="owl-carousel testimonials-carousel">
+
+        <div class="testimonial-item">
+          <h3 style="font-weight: bold;">랄프 왈도 에머슨</h3>
+          <p>
+            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+            아무것도 하지 않으면서 무언가를 하고 있다고 믿는건 담배로 인해 겪게 되는 첫 번째 환상입니다.
+            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+          </p>
+        </div>
+
+        <div class="testimonial-item">
+          <h3 style="font-weight: bold;">뒤 모리에</h3>
+          <p>
+            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+            불행한 사람일수록 담배를 더 피우고, 담배를 더 피울수록 불행해진다. 이것은 죽음에 이르는 악순환이자, 지름길이다.
+            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+          </p>
+        </div>
+
+        <div class="testimonial-item">
+          <h3 style="font-weight: bold;">피트</h3>
+          <p>
+            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+            담배 한 대를 피우는 동안 수명은 34초 단축된다.
+            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+          </p>
+        </div>
+
+        <div class="testimonial-item">
+          <h3 style="font-weight: bold;">마크 트웨인</h3>
+          <p>
+            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+            금연만큼 쉬운 일은 없다. 나는 매일 끊어 와서 수백 번도 더 끊었다.
+            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+          </p>
+        </div>
+
+        <div class="testimonial-item">
+          <h3 style="font-weight: bold;">서홍관(의사)</h3>
+          <p>
+            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+            많은 사람들이 담배가 스트레스를 해소한다고 믿는다. 그러나 흡연이 스트레스의 원인이다.
+            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+          </p>
+        </div>
+        
+        <div class="testimonial-item">
+          <h3 style="font-weight: bold;">웨인 멕라렌(말보로 모델)</h3>
+          <p>
+            <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+            나는 흡연이 인명을 살상시킨다는 명백한 증거를 남기며 죽어가고 있습니다.
+            <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Ttstimonials Section -->
+  {% else: %}
+  <section>
+    <div style="width: 55%; float:none; margin:0 auto">
+      <div class="col-11">
+        <div class="p-5">
+          <div class="text-center">
+            <h1 class="h4 text-gray-900 mb-4">Welcome Stop Smoking!</h1>
+          </div>
+          <hr>
+          <p style="font-weight: bold;">하루 평균 흡연량 : </p>
+          <input id="smokeAmount" class="form-control form-control-user" type="number" placeholder=" 단위 : 갑 ">
+          <hr>
+          <p style="font-weight: bold;">금연 시작 날짜 : </p>
+          <input id="smokeDate" class="form-control form-control-user" type="datetime-local">
+          <hr>
+          <p style="font-weight: bold;">금연을 결심한 이유 : </p>
+          <textarea id="smokeReason" class="form-control form-control-user" type="text"></textarea>
+          <br>
+          <a class="btn btn-primary btn-user btn-block" onclick="stopGo()">Let's quit smoking</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
 
 
+</main><!-- End #main -->
 
-  </main><!-- End #main -->
 
-
-  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
 {% endblock %}
