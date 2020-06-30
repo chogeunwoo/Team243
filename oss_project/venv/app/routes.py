@@ -296,7 +296,7 @@ def diary():
   if 'username' in session:
     result = '%s' % escape(session['username'])
     content = mysql_dao.get_dbSelect_diary(result)
-    return render_template('diary.html', trade = content)
+    return render_template('diary.html', loginId = result, trade = content)
 
   else:
     return redirect('/')
