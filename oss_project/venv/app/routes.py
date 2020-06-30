@@ -74,18 +74,12 @@ def freeBoard():
 def more():
   if request.method == "POST":
     pno = request.form["pno"]
+    print(pno)
     post = mysql_dao.get_dbSelect_pno(pno)
     comment = mysql_dao.get_dbSelect_comment_list(pno)
     if 'username' in session:
       result = '%s' % escape(session['username'])
     return render_template('more.html', content=post, loginId = result, comment = comment)
-  
-  else:
-    pno = request.form["pno"]
-    post = mysql_dao.get_dbSelect_pno(pno)
-    if 'username' in session:
-      result = '%s' % escape(session['username'])
-    return render_template('more.html', content=post, loginId = result)
 
 @app.route('/changePost', methods=['POST'])
 def changePost():
@@ -95,6 +89,21 @@ def changePost():
     if 'username' in session:
       result = '%s' % escape(session['username'])
   return render_template('changePost.html', content=post, loginId = result)
+
+@app.route('/changeMyinfo_route', methods=['POST'])
+def changeMyinfo_route():
+  if 'username' in session:
+    email = '%s' % escape(session['username'])
+    if request.method == "POST":
+      name = request.form["name"]
+      pw = request.form["pw"]
+      phone_num = request.form["phone_num"]
+      update = mysql_dao.get_dbChange_changeMyinfo(email, name, pw, phone_num)
+      return render_template('myinfo.html', name = update)
+  else:
+    session['username'] = ''
+    result = '%s' % escape(session['username'])
+  return redirect('/myinfo')
 
 @app.route('/deletePost', methods=['POST'])
 def deletePost():
@@ -137,7 +146,12 @@ def createComment():
     userId = request.form["userId"]
     cbody = request.form["cbody"]
     comment =  mysql_dao.get_dbInsert_comment(cbody,userId,pno)
-  return redirect('/freeBoard')
+    comment1 = mysql_dao.get_dbSelect_comment_list(pno)
+    last_comment = comment1[-1]
+    print(last_comment,"dsssssssssssssssss")
+    print(last_comment["cno"],"dsssssssssssssssss")
+    json_object = {"userId": userId, "cbody": cbody}
+  return last_comment
 
 @app.route('/changeComment',methods=['POST'])
 def changeComment():
@@ -233,19 +247,6 @@ def register_route():
       content = mysql_dao.get_dbInsert_register(reqname,reqid,reqpw,reqphone_num)
       return content
 
-
-@app.route('/changeMyinfo_route', methods=['GET', 'POST'])
-def changeMyinfo_route(): 
-  if request.method == "POST":
-    reqname = request.form["name"]
-    reqid = request.form["id"]
-    reqpw = request.form["pw"]
-    reqphone_num = request.form["phone_num"]
-    if(reqname == '' or reqid == '' or reqpw == '' or reqphone_num == ''):
-      return "blank"
-    else:
-      content = mysql_dao.get_dbInsert_changeMyinfo(reqname,reqid,reqpw,reqphone_num)
-      return content
 
 @app.route('/myinfo')
 def myinfo():

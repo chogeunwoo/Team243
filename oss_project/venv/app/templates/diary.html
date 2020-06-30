@@ -1,5 +1,14 @@
+<script>
+  function loginGo() {
+    alert("로그인을 해주세요")
+    location.href = '/login'
+  }
+</script>
+
 {% extends "sub_layout.html" %}
 {% block content %}
+
+
 <style>
   #select {
     display: inline-block;
@@ -31,37 +40,35 @@
 
   <section>
     <div style="width: 60%; float:none; margin:0 auto">
-      <div style="float: right;">
-        <a href="new_diary">
-          <button type="submit" class="btn btn-primary">다이어리 작성</button>
-        </a>
-      </div>
-      <p style="clear: both;"></p>
-
-      {% if(diary_title==""): %}
-      <div style="width: 60%; float:none; margin:0 auto">
-        <div style="float: right;">
-          <a href="new_diary">
-            <button type="submit" class="btn btn-primary">다이어리 작성</button>
-          </a>
+      <div class="row">
+        <div class="col">
+          <h2>Diary</h1>
         </div>
-        <p style="clear: both;"></p>
+        <div class="col-md-auto">
+        </div>
+        {% if(loginId==''): %}
+        <button type="button" class="btn btn-primary btn-sm" onclick="loginGo()">다이어리 작성</button>
         {% else: %}
-        {% for trades in trade: %}
-        <p style="display: none;">{{trades.diary_id}}</p>
-        <h3 style="font-weight: bold;">{{ trades.diary_title}}</h2>
-          <p id="select">{{ trades.diary_body }}</p>
-          <p>{{ trades.diary_date }}</p>
-          <form method="POST" action="/diary_more">
-            <input type="text" name="id" style="display: none;" value="{{trades.diary_id}}">
-            <button type="submit" class="btn btn-primary">더 보기</button>
-          </form>
-          <hr>
-          {% endfor %}
-          {% endif %}
-
-
+        <button type="button" class="btn btn-primary btn-sm" onclick="location.href='/new_diary'">다이어리 작성</button>
+        {% endif %}
       </div>
+      <hr>
+      {% if(trade=="fail"): %}
+      <p>다이어리를 작성해보세요!</p>
+      {% else: %}
+      {% for trades in trade: %}
+      <p style="display: none;">{{trades.diary_id}}</p>
+      <h3 style="font-weight: bold;">{{ trades.diary_title}}</h2>
+        <p id="select">{{ trades.diary_body }}</p>
+        <p>{{ trades.diary_date }}</p>
+        <form method="POST" action="/diary_more">
+          <input type="text" name="id" style="display: none;" value="{{trades.diary_id}}">
+          <button type="submit" class="btn btn-primary">더 보기</button>
+        </form>
+        <hr>
+        {% endfor %}
+        {% endif %}
+    </div>
   </section>
 
 

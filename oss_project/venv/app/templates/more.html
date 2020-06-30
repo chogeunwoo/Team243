@@ -15,28 +15,17 @@
     location.href = '/login'
   }
 </script>
+
 <script>
   function create_Comment() {
     var xhttp = new XMLHttpRequest();
-
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
-        var result = this.responseText;
-        const res = JSON.parse(result);
-        console.log(res, "script");
-        for (var i = 0; i <= res[0]; i++) {
-          txt = '';
-          txt += '<p>' + res[i].cbody + '<p>'
-          txt += '<p>' + res[i].userId + '<p>'
-          txt += '<p>' + res[i].pno + '<p>'
-          txt += '<hr>'
-          document.getElementById("function_result").innerHTML = txt;
-        }
+        location.href = "/more"
       }
     };
-
     var parameter = 'cbody=' + document.getElementById("cbody").value + '&userId=' + document.getElementById("userId").value + '&pno=' + document.getElementById("pno").value;
-    console.log(parameter);//입력 값 콘솔에 출력
+
     xhttp.open("post", "/createComment", true);
     xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhttp.send(parameter);//입력 값 서버에 전송
@@ -93,41 +82,53 @@
             <p>내용: {{ content.pbody }}</p>
             <hr />
         </div>
+        {% if (comment[0] == 0 ): %}
         <div id="function_result">
-          {% for comment in comment %}
-          <div>
-            <p>{{ comment.userId }} : {{ comment.cbody }}</p>
-
-            {% if (loginId == comment.userId): %}
-            <div id="btn1">
-              <form method="POST" action="/changeComment">
-                <input type="text" name="cno" style="display:none;" value="{{ comment.cno }}">
-                <button type="submit" class="btn btn-primary">댓글 수정</button>
-              </form>
-            </div>
-            <div id="btn2">
-              <form method="POST" action="/deleteComment">
-                <input type="text" name="cno" style="display:none;" value="{{ comment.cno }}">
-                <button type="submit" class="btn btn-primary">삭제</button>
-              </form>
-            </div>
-            <br>
-            {% else: %}
-            {% endif %}
-            <hr>{% endfor %}
-          </div>
+          <p>첫번째 댓글을 작성하세요!</p>
         </div>
+        {% else: %}
+        <div>
+          {% for i in range(1,comment[0]+1) %}
+          <p>{{ comment[i].userId }} : {{ comment[i].cbody }}</p>
+          {% if (loginId == comment[i].userId): %}
+          <div id="btn1">
+            <form method="POST" action="/changeComment">
+              <input type="text" name="cno" style="display:none;" value="{{ comment[i].cno }}">
+              <button type="submit" class="btn btn-primary">댓글 수정</button>
+            </form>
+          </div>
+          <div id="btn2">
+            <form method="POST" action="/deleteComment">
+              <input type="text" name="cno" style="display:none;" value="{{ comment[i].cno }}">
+              <button type="submit" class="btn btn-primary">삭제</button>
+            </form>
+          </div>
+          <br>
+          {% else: %}
+          {% endif %}
+          <hr>
+          {% endfor %}
+          {% endif %}
+          
+        <div id="function_result">
+        </div>
+        </div>
+
+
         {% if(loginId==''): %}
         <div class="col">
           <textarea class="form-control" id="inputComment" rows="7" placeholder=" Please enter the comment"></textarea>
-          <a type="button" class="btn btn-primary btn-user btn-block" onclick="loginGo()">submit</a>
+          <a class="btn btn-primary btn-user btn-block" onclick="loginGo()">submit</a>
         </div>
         {% else: %}
         <div class="col">
-          <input type="number" id="pno" style="display:none;" value="{{ content.pno }}">
-          <input type="text" id="userId" style="display:none;" value="{{ loginId }}">
-          <textarea class="form-control" id="cbody" rows="7" placeholder=" Please enter the comment"></textarea>
-          <a type="button" class="btn btn-primary btn-user btn-block" onclick="create_Comment()">submit</a>
+          <form method="GET" action="/more">
+            <input type="number" name="pno" id="pno" style="display:none;" value="{{ content.pno }}">
+            <input type="text" id="userId" style="display:none;" value="{{ loginId }}">
+            <textarea class="form-control" id="cbody" rows="7" placeholder=" Please enter the comment"></textarea>
+            <br>
+            <a class="btn btn-primary btn-user btn-block" onclick="create_Comment()">submit</a>
+          </form>
         </div>
         {% endif %}
       </div>

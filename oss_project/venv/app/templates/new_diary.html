@@ -7,7 +7,7 @@
         var member = this.responseText;
         console.log(member,"script");
         if (member != "fail") {
-          location.href = '/';
+          location.href = '/diary';
         }
         else {
           alert("실패");
@@ -52,7 +52,7 @@
       <textarea cols="50" rows="15" class="form-control" id="body" name = "body" placeholder="body"></textarea>
     </div>
     <input type="date" min="1998-12-18" max="2023-12-31" id="date" name = "date"><br><br>
-    <a href = "/"><button type="submit" class="btn btn-primary" onclick="DiaryGo()">Create Diary</button></a>
+    <a type="submit" class="btn btn-primary" onclick="DiaryGo()">Create Diary</a>
   </div>
   </form>
 </main>

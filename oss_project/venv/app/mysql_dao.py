@@ -279,6 +279,7 @@ def get_dbSelect_pno(pno):
             row = cursor.fetchall()
             for row_data in row :
                 json_object = {
+                    'row_num' : row_num,
                     'pno': row_data[0],
                     "ptitle": row_data[1],
                     "pbody": row_data[2],
@@ -370,6 +371,7 @@ def get_dbSelect_comment_list(pno):
         if row_num > 0:
             row = cursor.fetchall()
             comment_list=[]
+            comment_list.append(row_num)
             for row_data in row:
                 comment_list.append(
                     {
@@ -381,7 +383,10 @@ def get_dbSelect_comment_list(pno):
                 )
             return comment_list 
         else:
-            return "fail"
+            comment_list=[]
+            comment_list.append(0)
+            return comment_list
+
 
 def get_dbSelect_comment(cno):
     conn = connection.connection()
