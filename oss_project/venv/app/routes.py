@@ -24,6 +24,30 @@ def main():
     result = '%s' % escape(session['username'])
     return redirect('/')
 
+@app.route('/stopSmoking')
+def stopSmoking():
+  if 'username' in session:
+    result = '%s' % escape(session['username'])
+    yourname = mysql_dao.get_dbSelect_myinfo(result)
+    return render_template('stopSmoking.html', loginId = result, name = yourname)
+  else:
+    session['username'] = ''
+    result = '%s' % escape(session['username'])
+    return redirect('/stopSmoking')
+
+@app.route('/stopSmoking_route')
+def stopSmoking_route():
+  if request.method == "POST":
+    if 'username' in session:
+      result = '%s' % escape(session['username'])
+    smokeAmount = request.form["smokeAmount"]
+    smokeDate = request.form["smokeDate"]
+    smokeReason = request.form["smokeReason"]
+    if(smokeAmount == '' or smokeDate == '' or smokeReason == ''):
+      return "blank"
+    post = mysql_dao.get_dbInsert_stop(result, smokeAmount, smokeDate, smokeReason)
+  return render_template('changePost.html', result=post, loginId = result)
+
 @app.route('/contact')
 def contact():
   if 'username' in session:
@@ -68,6 +92,7 @@ def freeBoard():
   if 'username' in session:
     result = '%s' % escape(session['username'])
     post = mysql_dao.get_dbSelect_post()
+    print(post)
     return render_template('freeBoard.html', content=post, loginId=result)
 
 @app.route('/more', methods=['POST','GET'])

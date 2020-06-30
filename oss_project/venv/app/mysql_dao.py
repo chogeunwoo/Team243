@@ -2,6 +2,18 @@ import pymysql
 import connection
 import json
 
+def get_dbInsert_stop(email, smoke_amount, smoke_date, smoke_reason):
+    conn = connection.connection()
+    try:
+        cursor = conn.cursor()
+        sql = "INSERT INTO post (email, smoke_amount, smoke_date, smoke_reason) VALUES (%s, %s, %s, %s);"
+        val = (email, smoke_amount, smoke_date, smoke_reason)
+        cursor.execute(sql,val)
+        conn.commit()
+    finally:
+        cursor.close()
+        return "true"
+
 def get_dbInsert_register(name, email, pw, phone_num):
     conn = connection.connection()
     try:
@@ -161,9 +173,10 @@ def get_dbSelect_post():
         row_num = cursor.rowcount
     finally:
         cursor.close()
+        post=[]
+        post.append(row_num)
         if row_num > 0:
             row = cursor.fetchall()
-            post=[]
             for row_data in row:
                 post.append(
                     {
@@ -173,11 +186,9 @@ def get_dbSelect_post():
                         'email': row_data[3]
                     }
                 )
-            #json.dumps(row)
-            # print(json.dumps(row))
-            return post #json.dumps(row)
+            return post
         else:
-            return ""
+            return post
 
 def get_dbDelete_post(pno):
     conn = connection.connection()

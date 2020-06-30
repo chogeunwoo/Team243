@@ -20,8 +20,8 @@
   function create_Comment() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        location.href = "/more"
+      if (this.readyState == 4 && this.status == 200 ) {
+        location.reload();
       }
     };
     var parameter = 'cbody=' + document.getElementById("cbody").value + '&userId=' + document.getElementById("userId").value + '&pno=' + document.getElementById("pno").value;
@@ -54,7 +54,8 @@
       <div class="container">
         <div class="row">
           <div class="col">
-            <h2>{{ content.ptitle }}</h2>
+            <h2>제목 : {{ content.ptitle }}</h2>
+            <hr>
           </div>
           <div class="col-md-auto">
           </div>
@@ -75,12 +76,11 @@
           <p></p>
           {% endif %}
         </div>
-        <div class="text-center">
-          <p>
-          <h3>제목: {{ content.ptitle }}</h2>
-            </p>
+        <div class="text-left">
+          <br>
             <p>내용: {{ content.pbody }}</p>
-            <hr />
+            <br>
+            <hr>
         </div>
         {% if (comment[0] == 0 ): %}
         <div id="function_result">

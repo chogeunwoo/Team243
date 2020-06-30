@@ -42,21 +42,27 @@
           <button type="button" class="btn btn-primary btn-sm" onclick="location.href='/createPost'">글 등록</button>
           {% endif %}
         </div>
+        <hr>
 
-        <hr />
-        {% for contents in content %}
+        {% if (content[0] == 0 ): %}
+        <div id="function_result">
+          <p>첫번째 댓글을 작성하세요!</p>
+        </div>
+        {% else: %}
+        {% for i in range(1,content[0]+1) %}
         <div class="text-center">
           <p>
-          <h3>제목: {{ contents.ptitle }}</h2>
+          <h3>제목: {{ content[i].ptitle }}</h2>
             </p>
-            <p id="limit_contents">내용: {{ contents.pbody }}</p>
+            <p id="limit_contents">내용: {{ content[i].pbody }}</p>
             <form method="POST" action="/more">
-              <input type="text" name="pno" style="display:none;" value="{{ contents.pno }}">
+              <input type="text" name="pno" style="display:none;" value="{{ content[i].pno }}">
               <button type="submit" class="btn btn-primary btn-sm">MORE</button>
             </form>
             <hr />
         </div>
         {% endfor %}
+        {% endif %}
       </div>
     </div>
 
